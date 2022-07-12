@@ -5,6 +5,7 @@ import { fetchStudentDetailRequest } from "../Redux/action/studentDetail";
 import { ExamDetailRequest } from "../Redux/action/viewExamDetail";
 import { isTeacher } from "./function";
 import DemoTable from "./ReusableComponents/DemoTable";
+import Table from "./ReusableComponents/Table";
 import Loading from "./ReusableComponents/Loading";
 
 const ViewExamDetail = () => {
@@ -22,6 +23,7 @@ const ViewExamDetail = () => {
     isTeacher(navigate);
     dispatch(ExamDetailRequest(id));
   }, []);
+  let tableheadings = ["question", "options", "answer"];
   return (
     <>
       <div className="container my-3">
@@ -29,7 +31,11 @@ const ViewExamDetail = () => {
           {myState.loading ? (
             <Loading></Loading>
           ) : (
-            <DemoTable tableData={tableData}></DemoTable>
+            <DemoTable
+              tableheadings={tableheadings}
+              tableData={tableData}
+            ></DemoTable>
+            // <Table tableData={tableData}></Table>
           )}
         </div>
       </div>

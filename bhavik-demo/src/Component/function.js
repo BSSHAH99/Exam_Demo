@@ -46,6 +46,14 @@ export function reset(obj) {
   return newObj;
 }
 
+export function resetGivExam(obj) {
+  const newObj = Object.keys(obj).reduce((accumulator, current) => {
+    accumulator[current] = "";
+    return accumulator;
+  }, {});
+  return newObj;
+}
+
 // localStorage.getItem("access-token");
 
 // const authAxios = axios.create({

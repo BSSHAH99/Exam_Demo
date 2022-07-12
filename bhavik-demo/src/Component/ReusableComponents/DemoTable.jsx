@@ -2,6 +2,8 @@ import React from 'react'
 import DemoButton from './DemoButton';
 
 const DemoTable = ({ tableData, tableheadings, DetailName, Detail, Edit, EditName, Delete, DeleteName, ...props }) => {
+
+
     const th = new Set();
     tableData.map((items) => {
         return Object.entries(items).map(([key]) => {
@@ -52,9 +54,17 @@ const DemoTable = ({ tableData, tableheadings, DetailName, Detail, Edit, EditNam
                                                     // console.log('arr[0] typeof object and !isarray :>> ', arr[0]);
                                                 }
                                                 else if (typeof data[item] === "object" && Array.isArray(data[item])) {
-                                                    // console.log("typeof && isarray cheking");
-                                                    test.push(data[item]);
-                                                    console.log('test :>> ', test);
+
+                                                    if (window.location.pathname === "/student-deshbord") {
+
+                                                    }
+                                                    else {
+                                                        test.push(data[item]);
+                                                    }
+
+
+                                                    // window.location.pathname("student-deshbord/")
+                                                    // test.push(data[item]);
                                                 }
                                                 else {
                                                     arr = data[item]
@@ -64,7 +74,6 @@ const DemoTable = ({ tableData, tableheadings, DetailName, Detail, Edit, EditNam
                                                     {test.length ?
                                                         // console.log('tessdfgsdfgdsgfgfgt :>> ', test)
                                                         test[0].map((items, i) => {
-                                                            console.log('items :>> ', items);
                                                             return (<React.Fragment>
                                                                 <div key={i}>
                                                                     {i + 1}. {items}
@@ -125,6 +134,7 @@ const DemoTable = ({ tableData, tableheadings, DetailName, Detail, Edit, EditNam
                                                 </td>
                                             </React.Fragment>
                                         }
+
                                     </tr>
                                 </React.Fragment>
                             })

@@ -6,6 +6,8 @@ import { isTeacher } from "./function";
 // import DemoTable from "./ReusableComponents/DemoTable";
 import TestTable from "./ReusableComponents/TestTable";
 import Loading from "./ReusableComponents/Loading";
+import LastTable from "./ReusableComponents/LastTable";
+import DemoTable from "./ReusableComponents/DemoTable";
 
 const StudentDetail = () => {
   const search = useLocation().search;
@@ -16,7 +18,6 @@ const StudentDetail = () => {
   const myState = useSelector((state) => state.studentDetailReducer);
   const student = myState.studentDetail;
 
-  // let th = Object.keys(student[0] || []);
   let th = [
     "name",
     "email",
@@ -27,8 +28,6 @@ const StudentDetail = () => {
     "subjectName",
   ];
   let tableData = Object.values(student || {});
-
-  // console.log("tableheadings :>> ", tableheadings);
 
   useEffect(() => {
     isTeacher(navigate);
@@ -42,8 +41,8 @@ const StudentDetail = () => {
           {myState.loading ? (
             <Loading></Loading>
           ) : (
-            <TestTable th={th} tableData={tableData}></TestTable>
             // <DemoTable tableData={tableData}></DemoTable>
+            <TestTable data={tableData}></TestTable>
           )}
         </div>
       </div>

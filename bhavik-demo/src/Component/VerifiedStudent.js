@@ -5,6 +5,7 @@ import { fetchVerifiedStudentRequest } from "../Redux/action/getVerifiedStudent"
 import { isTeacher } from "./function";
 import DemoTable from "./ReusableComponents/DemoTable";
 import Loading from "./ReusableComponents/Loading";
+import TestTable from "./ReusableComponents/TestTable";
 
 const VerifiedStudent = () => {
   const navigate = useNavigate();
@@ -36,8 +37,12 @@ const VerifiedStudent = () => {
               tableData={tableData}
               Detail={onDetail}
               DetailName={"Detail"}
-              // path={"/student-detail/" + id}
             ></DemoTable>
+            // <TestTable
+            //   tableData={tableData}
+            //   Detail={onDetail}
+            //   DetailName={"Detail"}
+            // ></TestTable>
           )}
         </div>
       </div>

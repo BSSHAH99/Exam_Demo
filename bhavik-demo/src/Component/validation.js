@@ -126,12 +126,12 @@ export default function validation(name, values, userData) {
         return "";
       }
 
-    case "notes":
-      if (!values) {
-        return "Notes is Required";
-      } else {
-        return "";
-      }
+    // case "notes":
+    //   if (!values) {
+    //     return "Notes is Required";
+    //   } else {
+    //     return "";
+    //   }
     // case "option1":
     //   if (!values) {
     //     return "Option1 is Required";
@@ -160,136 +160,4 @@ export default function validation(name, values, userData) {
     default:
       return "";
   }
-
-  // if (name === "email") {
-  //   const email = value;
-  //   if (email === "") {
-  //     errors.email = "email is required";
-  //   } else if (!email.match(regEmail)) {
-  //     errors.email = "Please enter a valid email address";
-  //   } else {
-  //     errors.email = "";
-  //   }
-  // }
-
-  // if (name === "password") {
-  //   const Password = value;
-  //   if (!Password) {
-  //     errors.Password = "password is required";
-  //   } else if (Password.length < 6) {
-  //     errors.Password = "password must be longer than 6 characters";
-  //   } else if (Password.length >= 20) {
-  //     errors.Password = "password must shorter than 20 characters";
-  //   } else {
-  //     errors.Password = "";
-  //   }
-  // }
 }
-
-// import React, { useState } from "react";
-
-// const useValidated = (
-//   name,
-//   value,
-//   formErrors,
-//   setFormErrors,
-//   formValues
-//   ) => {
-
-//     // const [option2222, setOption2222] = useState("lll")
-
-//   // const vadd =()=>{
-
-//   let errors = formErrors;
-//   let va = "";
-//   if (name === "Password") {
-//     va = value;
-//   }
-//   // console.log("name", name, value);
-
-//   if (name === "name") {
-//     const name = value;
-//     if (!name) {
-//       formErrors.name = "name is required";
-//     } else if (name.length < 3) {
-//       formErrors.name = " name must be more than 3 characters";
-//     } else {
-//       formErrors.name = "";
-//     }
-//   }
-//   const emailReg =
-//     /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$/;
-//   if (name === "email") {
-//     const email = value;
-//     if (email === "") {
-//       formErrors.email = "email is required";
-//     } else if (!email.match(emailReg)) {
-//       formErrors.email = "Please enter a valid email address";
-//     } else {
-//       formErrors.email = "";
-//     }
-//   }
-
-//   if (name === "password") {
-//     const password = value;
-//     if (!password) {
-//       formErrors.password = "password is required";
-//     } else if (password.length < 6) {
-//       formErrors.password = "password must be longer than 6 characters";
-//     } else if (password.length >= 20) {
-//       formErrors.password = "password must shorter than 20 characters";
-//     } else {
-//       formErrors.password = "";
-//     }
-//   }
-//   if (name === "role") {
-//     const role = value;
-//     if (!role) {
-//       formErrors.role = "role is required";
-//     } else {
-//       formErrors.role = "";
-//     }
-//   }
-
-//   if (name === "Password") {
-//     const Password = value;
-//     if (!Password) {
-//       formErrors.Password = "password is required";
-//     } else if (Password.length < 6) {
-//       formErrors.Password = "password must be longer than 6 characters";
-//     } else if (Password.length >= 20) {
-//       formErrors.Password = "password must shorter than 20 characters";
-//     } else {
-//       formErrors.Password = "";
-//     }
-//   }
-
-//   if (name === "ConfirmPassword") {
-//     const ConfirmPassword = value;
-//     if (!ConfirmPassword) {
-//       formErrors.ConfirmPassword = "ConfirmPassword is required";
-//     } else {
-//       formErrors.ConfirmPassword = "";
-//     }
-//   }
-
-//   if (value === "") {
-//     formErrors[name] = `${name} is required`;
-//   } else {
-//     formErrors[name] = "";
-//   }
-
-// // }
-
-//   return ( setFormErrors(formErrors));
-// };
-// export default useValidated;
-
-// export const valid = (formValues1, formErrors, setFormErrors) => {
-//   Object.keys(formValues1).map((key, i) => {
-//     if (formValues1[key] === "") {
-//       formErrors[key] = `${key}  is required`;
-//       setFormErrors({ ...formErrors, [key]: formErrors[key] });
-//     }
-//   });
-// };

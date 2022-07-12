@@ -13,6 +13,7 @@ import examDetailReducer from "../reducer/viewExamDetailReducer";
 import allExamStudentReducer from "../reducer/allExamStudentReducer";
 import studentProfileReducer from "../reducer/studentProfileReducer";
 import editStudentProfileReducer from "../reducer/editStudentProfileReducer";
+import examPaperReducer from "../reducer/examPaperReducer";
 
 const rootReducer = combineReducers({
   userSignupReducer: userSignupReducer,
@@ -29,6 +30,7 @@ const rootReducer = combineReducers({
   allExamStudentReducer: allExamStudentReducer,
   studentProfileReducer: studentProfileReducer,
   editStudentProfileReducer: editStudentProfileReducer,
+  examPaperReducer: examPaperReducer,
 });
 
 export default rootReducer;

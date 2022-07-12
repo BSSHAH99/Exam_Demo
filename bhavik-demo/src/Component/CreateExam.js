@@ -394,12 +394,15 @@ const CreateExam = () => {
               >
                 Next
               </DemoButton>
-              {/* <DemoButton onClick={btnClickClear} type={"button"}>
-              Clear
-            </DemoButton> */}
-              <DemoButton type={"submit"}>
-                {data.questions.length === 14 ? "Create Exam" : "Add Question"}
-              </DemoButton>
+              {id ? (
+                <DemoButton type={"submit"}>Update</DemoButton>
+              ) : (
+                <DemoButton type={"submit"}>
+                  {data.questions.length === 14
+                    ? "Create Exam"
+                    : "Add Question"}
+                </DemoButton>
+              )}
             </form>
           )}
         </div>
