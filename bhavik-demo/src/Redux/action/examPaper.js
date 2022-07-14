@@ -25,11 +25,14 @@ export const fetchExamPaperFailure = (error) => {
   };
 };
 
-export const giveExamRequest = (id) => {
+export const giveExamRequest = (id, data, navigate) => {
   return async (dispatch) => {
-    await Api.post("/student/giveExam?id=" + id)
+    await Api.post("/student/giveExam?id=" + id, data)
       .then((res) => {
         console.log("res.data", res.data);
+        setTimeout(() => {
+          navigate("/result?id=" + id);
+        }, 3000);
       })
       .catch((error) => console.log("error.message", error.message));
   };

@@ -18,11 +18,14 @@ import Alert from "./ReusableComponents/Alert";
 const EditStudentProfile = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  //   const name = useSelector((state) => state.studentProfileReducer);
+
+  const studentProfileState = useSelector(
+    (state) => state.studentProfileReducer
+  );
+  const student = studentProfileState.student;
 
   useEffect(() => {
     isStudent(navigate);
-    dispatch(studentProfileRequest());
   }, []);
 
   let myState = useSelector((state) => state.editStudentProfileReducer);
@@ -47,6 +50,9 @@ const EditStudentProfile = () => {
   const handleChange = (e) => {
     dispatch(editStudentProfileOnChange(e.target.name, e.target.value));
   };
+
+  // console.log("student :>> ", student);
+  // console.log("userData :>> ", userData);
 
   return (
     <div className="container my-3">

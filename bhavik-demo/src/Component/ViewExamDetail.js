@@ -31,11 +31,11 @@ const ViewExamDetail = () => {
           {myState.loading ? (
             <Loading></Loading>
           ) : (
-            <DemoTable
-              tableheadings={tableheadings}
-              tableData={tableData}
-            ></DemoTable>
-            // <Table tableData={tableData}></Table>
+            // <DemoTable
+            //   tableheadings={tableheadings}
+            //   tableData={tableData}
+            // ></DemoTable>
+            <Table tableheadings={tableheadings} tableData={tableData}></Table>
           )}
         </div>
       </div>

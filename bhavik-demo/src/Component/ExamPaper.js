@@ -51,16 +51,19 @@ const ExamPaper = () => {
 
   const handalSubmit = (e) => {
     e.preventDefault();
-
     data.givexam[index - 1] = {
       question: formValues._id,
       answer: formValues.answer,
     };
-    setIndex(index + 1);
-    editValue(index);
-    setFormValues(reset(formValues));
+    if (data.givexam.length === 7) {
+      dispatch(giveExamRequest(id, data.givexam, navigate));
+    }
+    if (index < 7) {
+      setIndex(index + 1);
+      editValue(index);
+      setFormValues(reset(formValues));
+    }
   };
-
   const editValue = (number) => {
     let cloneData1 = {};
     Object.entries(data.questions[number] || {}).map(([key, value], i) => {
@@ -83,7 +86,9 @@ const ExamPaper = () => {
           break;
       }
     });
-    setCloneData({ ...cloneData1, notes: data.notes[number] });
+    if (data.givexam[number]?.answer) {
+      setCloneData({ ...cloneData1, answer: data.givexam[number].answer });
+    } else setCloneData({ ...cloneData1 });
   };
 
   const handleChange = (e) => {
@@ -96,9 +101,7 @@ const ExamPaper = () => {
     setIndex(index - 1);
   }
   function btnClickNext() {
-    if (data.questions.length - 1 <= index) {
-      setFormValues(reset(formValues));
-    }
+    setFormValues(reset(formValues));
     editValue(index);
     setIndex(index + 1);
   }

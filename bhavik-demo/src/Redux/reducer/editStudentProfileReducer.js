@@ -7,7 +7,7 @@ EditStudentProfileFields.forEach((element) => {
 });
 
 const initialstate = {
-  user: { ...user },
+  user: {},
   formerror: {},
   message: "",
 };
@@ -16,6 +16,9 @@ const editStudentProfileReducer = (state = initialstate, action) => {
   switch (action.type) {
     case ActionType.EDIT_STUDENT_ON_CHANGE:
       return { ...state, user: { ...state.user, ...action.payload } };
+
+    case ActionType.SET_STUDENT_DATA:
+      return { ...state, user: action.payload };
 
     case ActionType.IS_EDIT_STUDENT_ERROR:
       return { ...state, formerror: { ...state.formerror, ...action.payload } };

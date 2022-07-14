@@ -20,6 +20,7 @@ import AllExamStudent from "../Component/AllExamStudent";
 import ExamPaper from "../Component/ExamPaper";
 import StudentProfile from "../Component/StudentProfile";
 import EditStudentProfile from "../Component/EditStudentProfile";
+import Result from "../Component/Result";
 
 const RoutesNavbar = () => {
   const n = [
@@ -122,6 +123,11 @@ const RoutesNavbar = () => {
     {
       path: "/student-profile-edit",
       goto: <EditStudentProfile />,
+      requireAuth: true,
+    },
+    {
+      path: "/result",
+      goto: <Result />,
       requireAuth: true,
     },
     {

@@ -20,17 +20,22 @@ export const editStudentProfileRequest = (navigate) => {
     console.log("this is userData", userData);
     await Api.put("/student/studentProfile", userData)
       .then((res) => {
-        dispatch(editStudentProfileSuccess(res.data.message));
+        // dispatch(editStudentProfileSuccess(res.data.message));
         console.log("res.data.message :>> ", res.data.message);
-        // setTimeout(console.log("hii bhavik shah"), 5000);
-        // setTimeout(myGreeting, 5000);
-        dispatch(editStudentProfileClear(res.data));
+        navigate("/student-profile");
       })
-      .catch((error) => dispatch(editStudentProfileFailure(error.message)));
+      .catch((error) => {
+        console.log("error.message", error.message);
+        dispatch(editStudentProfileFailure(error.message));
+      });
   };
 };
 export const setStudentProfile = (userData) => {
   return { type: ActionType.EDIT_STUDENT_ON_CHANGE, payload: userData };
+};
+
+export const setStudentData = (userData) => {
+  return { type: ActionType.SET_STUDENT_DATA, payload: userData };
 };
 
 export const iseditStudentProfileError = (validat) => {

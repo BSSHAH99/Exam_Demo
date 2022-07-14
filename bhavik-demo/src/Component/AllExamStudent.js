@@ -30,7 +30,12 @@ const AllExamStudent = () => {
     dispatch(fetchExamPaperRequest(id));
   };
 
-  // let tableheadings = ["", "subjectName", "email"];
+  const onResult = (e, index, id) => {
+    navigate("/result?id=" + id);
+    // dispatch(fetchExamPaperRequest(id));
+  };
+
+  let tableheadings = ["subjectName", "email"];
   return (
     <>
       <div className="container my-3">
@@ -44,8 +49,12 @@ const AllExamStudent = () => {
             //   DetailName={"Give Exam"}
             //   tableheadings={tableheadings}
             // ></DemoTable>
+
             <Table
               tableData={tableData}
+              tableheadings={tableheadings}
+              Result={onResult}
+              ResultName={"Result"}
               Detail={onDetail}
               DetailName={"Give Exam"}
             ></Table>

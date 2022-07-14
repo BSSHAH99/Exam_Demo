@@ -1,10 +1,31 @@
 import React from 'react'
 import DemoButton from './DemoButton';
 
-const Table = ({ tableData, Detail, DetailName, Edit, EditName, Delete, DeleteName }) => {
+const Table = ({ tableheadings, tableData, Detail, DetailName, Edit, EditName, Delete, ResultName, Result, DeleteName }) => {
 
-    let keys = tableData && Array.isArray(tableData) ? Object.keys(tableData[0] || {}) : [];
+    let keys
 
+    if (tableheadings) {
+        keys = tableheadings
+
+    } else {
+        keys = tableData && Array.isArray(tableData) ? Object.keys(tableData[0] || {}) : [];
+
+    }
+
+
+
+
+    // const keys = ["subjectName", "email", "Result"];
+
+    // let keys = [];
+    // if (tableData && Array.isArray(tableData)) {
+    //     Object.entries(tableData[0]).map(([k]) => {
+    //         k === "_id" || k === "__v" || k === "notes" ? console.log("") : keys.push(k);
+
+    //     })
+    // }
+    // console.log('keys :>> ', keys);
     return (
         <div>
             <div className="container my-3">
@@ -13,24 +34,32 @@ const Table = ({ tableData, Detail, DetailName, Edit, EditName, Delete, DeleteNa
                         <thead>
                             <tr>
                                 {window.location.pathname === "/preview-exam" && <th>id</th>}
-                                {keys?.map((key, i) => {
-                                    return <th key={i}>{key.toUpperCase()}</th>;
-                                })}
+                                {
+                                    // tableheadings ? tableheadings.map((key, i) => {
+                                    //     return (
+                                    //         <th key={i}>{key.toUpperCase()}</th>
+                                    //     )
+                                    // }) :
+                                    keys?.map((key, i) => {
+                                        return (
+                                            <th key={i}>{key.toUpperCase()}</th>
+                                        )
+                                    })
+                                }
                             </tr>
                         </thead>
                         <tbody>
                             {tableData?.length > 0 &&
                                 tableData.map((data, index) => {
-                                    // console.log('data,value :>> ', tableData, data);
                                     return (
                                         <tr key={index}>
-                                            {window.location.pathname === "/preview-exam" && <td>{index + 1}</td>}
+                                            {/* {window.location.pathname === "/preview-exam" && <td>{index + 1}</td>} */}
                                             {keys.map((key, i) => {
                                                 return (
                                                     // value[key]===undefined ? null:
                                                     <React.Fragment key={i}>
                                                         {Array.isArray(data[key]) ? (
-                                                            window.location.pathname === "/student-deshbord" || window.location.pathname === "/student-deshbord" || window.location.pathname === "/preview-exam" ? (
+                                                            window.location.pathname === "/student-deshbord" || window.location.pathname === "/preview-exam" ? (
                                                                 <td>{`${data[key]}`}</td>
                                                             ) : (
                                                                 <>
@@ -46,8 +75,14 @@ const Table = ({ tableData, Detail, DetailName, Edit, EditName, Delete, DeleteNa
                                                     </React.Fragment>
                                                 );
                                             })}
-                                            {
-                                                Detail &&
+                                            {Result &&
+                                                <React.Fragment>
+                                                    <td>
+                                                        <DemoButton onClick={(e) => Result(e, index, data._id)}> {ResultName}</DemoButton>
+                                                    </td>
+                                                </React.Fragment>
+                                            }
+                                            {Detail &&
                                                 <React.Fragment>
                                                     <td>
                                                         <DemoButton onClick={(e) => Detail(e, index, data._id)}> {DetailName}</DemoButton>

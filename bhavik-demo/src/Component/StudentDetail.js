@@ -40,10 +40,10 @@ const StudentDetail = () => {
         <div className="container">
           {myState.loading ? (
             <Loading></Loading>
-          ) : (
-            // <DemoTable tableData={tableData}></DemoTable>
-            <TestTable data={tableData}></TestTable>
-          )}
+          ) : null
+          // <DemoTable tableData={tableData}></DemoTable>
+          // <TestTable data={tableData}></TestTable>
+          }
         </div>
       </div>
     </>
