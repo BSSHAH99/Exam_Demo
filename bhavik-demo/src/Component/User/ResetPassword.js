@@ -2,16 +2,16 @@ import React, { useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import resetPasswordFields from "../Constants/ResetPasswordFields";
+import resetPasswordFields from "../../Constants/ResetPasswordFields";
 import {
   isResetPasswordError,
   resetPasswordOnChange,
   resetPasswordRequest,
-} from "../Redux/action/resetPassword";
-import Alert from "./ReusableComponents/Alert";
-import DemoButton from "./ReusableComponents/DemoButton";
-import DemoInput from "./ReusableComponents/DemoInput";
-import validation from "./validation";
+} from "../../Redux/action/resetPassword";
+import Alert from "../ReusableComponents/Alert";
+import DemoButton from "../ReusableComponents/DemoButton";
+import DemoInput from "../ReusableComponents/DemoInput";
+import validation from "../validation";
 
 const ResetPassword = () => {
   const dispatch = useDispatch();

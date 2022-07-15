@@ -1,11 +1,9 @@
 export function isLogin(navigate) {
   localStorage.getItem("access-token") &&
     localStorage.getItem("name") &&
-    localStorage.getItem("role");
-  // &&
-  // navigate(-1);
+    localStorage.getItem("role") &&
+    navigate(-1);
 }
-
 export function isLoginCheck() {
   if (
     localStorage.getItem("access-token") &&

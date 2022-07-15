@@ -1,43 +1,40 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
-import {
-  fetchExamPaperRequest,
-  giveExamRequest,
-} from "../Redux/action/examPaper";
-import { isStudent, reset } from "./function";
-import DemoButton from "./ReusableComponents/DemoButton";
-import Loading from "./ReusableComponents/Loading";
-import ExamPaperFields from "../Constants/ExamPaperFields";
-import validation from "./validation";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { isTeacher, reset } from "../function";
+import Loading from "../ReusableComponents/Loading";
+import ExamPaperFields from "../../Constants/ExamPaperFields";
+import DemoButton from "../ReusableComponents/DemoButton";
+import PageNumber from "../ReusableComponents/PageNumber";
 
 const initialData = {
+  subjectName: "",
   questions: [],
-  givexam: [],
   notes: [],
 };
-const ExamPaper = () => {
+const ViewExamDetail = () => {
+  const TotalQuestion = 15;
   const search = useLocation().search;
   const id = new URLSearchParams(search).get("id");
-
   const [data, setData] = useState(initialData);
   const [index, setIndex] = useState(1);
   const [formValues, setFormValues] = useState({});
   const [cloneData, setCloneData] = useState({});
 
-  const myState = useSelector((state) => state.examPaperReducer);
-  const examPaper = myState.examPaper;
+  const viewExam = useSelector((state) => state.viewExamReducer.exam);
+  const exasmDetailState = useSelector((state) => state.examDetailReducer);
 
-  // console.log("myState :>> ", myState);
+  const exasmDetail = exasmDetailState.examDetail;
+  console.log("exasmDetail :>> ", exasmDetailState);
+  console.log("viewExam :>> ", viewExam);
+
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  useEffect(() => {
-    isStudent(navigate);
-    ExamPaperFields.map((data) =>
-      setFormValues((prv) => ({ ...prv, [data.name]: "" }))
-    );
 
+  const myState = useSelector((state) => state.examDetailReducer);
+  const exam = myState.examDetail;
+
+  useEffect(() => {
+    isTeacher(navigate);
     setTimeout(() => {
       editValue(index - 1);
     }, 2000);
@@ -49,29 +46,12 @@ const ExamPaper = () => {
     }
   }, [cloneData]);
 
-  const handalSubmit = (e) => {
-    e.preventDefault();
-    data.givexam[index - 1] = {
-      question: formValues._id,
-      answer: formValues.answer,
-    };
-    if (data.givexam.length === 7) {
-      dispatch(giveExamRequest(id, data.givexam, navigate));
-    }
-    if (index < 7) {
-      setIndex(index + 1);
-      editValue(index);
-      setFormValues(reset(formValues));
-    }
-  };
   const editValue = (number) => {
     let cloneData1 = {};
     Object.entries(data.questions[number] || {}).map(([key, value], i) => {
       switch (key) {
-        case "_id":
-          cloneData1._id = value;
-        case "question":
-          cloneData1.question = value || "";
+        case "subjectName":
+          cloneData1.subjectName = value || "";
           break;
         case "options":
           cloneData1.option1 = value[0];
@@ -79,21 +59,17 @@ const ExamPaper = () => {
           cloneData1.option3 = value[2];
           cloneData1.option4 = value[3];
           break;
+        case "question":
+          cloneData1.question = value || "";
+          break;
         case "answer":
           cloneData1.answer = value || "";
-
+          break;
         default:
           break;
       }
     });
-    if (data.givexam[number]?.answer) {
-      setCloneData({ ...cloneData1, answer: data.givexam[number].answer });
-    } else setCloneData({ ...cloneData1 });
-  };
-
-  const handleChange = (e) => {
-    const newError = validation(e.target.name, e.target.value);
-    setFormValues({ ...formValues, [e.target.name]: e.target.value });
+    setCloneData({ ...cloneData1, notes: data.notes[number] });
   };
 
   function btnClickPrevious() {
@@ -101,13 +77,24 @@ const ExamPaper = () => {
     setIndex(index - 1);
   }
   function btnClickNext() {
-    setFormValues(reset(formValues));
+    if (data.questions.length - 1 <= index) {
+      setFormValues(reset(formValues));
+    }
     editValue(index);
     setIndex(index + 1);
   }
 
-  data.questions = examPaper || "";
-  formValues.subjectName = data.subjectName;
+  if (id) {
+    console.log("this is edit code is heare");
+    viewExam.find((items) =>
+      items._id === id
+        ? ((data.notes = items.notes), (data.subjectName = items.subjectName))
+        : null
+    );
+    data.questions = exasmDetail.questions || "";
+
+    formValues.subjectName = data.subjectName;
+  }
 
   console.log("data", data);
 
@@ -119,7 +106,7 @@ const ExamPaper = () => {
             {!data.questions.length > 0 ? (
               <Loading></Loading>
             ) : (
-              <form onSubmit={handalSubmit}>
+              <form>
                 <h2> Question No : {index}</h2>
                 {ExamPaperFields.map((data, i) => {
                   return (
@@ -140,7 +127,7 @@ const ExamPaper = () => {
                                         className="form-check-input mx-3"
                                         type="radio"
                                         name={data.name}
-                                        onChange={handleChange}
+                                        disabled={true}
                                         value={
                                           typeof ele === "string"
                                             ? ele
@@ -167,7 +154,6 @@ const ExamPaper = () => {
                                               name={ele.name}
                                               value={formValues[ele.name] || ""}
                                               placeholder={ele.placeholder}
-                                              onChange={handleChange}
                                             />
                                           </div>
                                         </>
@@ -177,24 +163,6 @@ const ExamPaper = () => {
                                 })}
                               </div>
                             );
-                          // case "dropdown":
-                          //   return (
-                          //     <div>
-                          //       <div className="mb-3">
-                          //         <select
-                          //           onChange={handleChange}
-                          //           name={data.name}
-                          //           value={formValues[data.name]}
-                          //           className="form-select"
-                          //         >
-                          //           <option value="">Select Subject</option>
-                          //           {data.options.map((option, index) => {
-                          //             return <option key={index}>{option}</option>;
-                          //           })}
-                          //         </select>
-                          //       </div>
-                          //     </div>
-                          //   );
                           default:
                             return (
                               <div>
@@ -208,7 +176,6 @@ const ExamPaper = () => {
                                       type={data.type}
                                       name={data.name}
                                       placeholder={data.placeholder}
-                                      onChange={handleChange}
                                     />
                                     <p style={{ color: "red" }}></p>
                                   </div>
@@ -234,11 +201,12 @@ const ExamPaper = () => {
                 >
                   Next
                 </DemoButton>
-                <DemoButton type={"submit"}>
-                  {index === 7 ? "Exam Preview" : "Confirm Answer"}
-                </DemoButton>
               </form>
             )}
+            <PageNumber
+              TotalPageNumber={TotalQuestion}
+              CurrentPageNumber={index}
+            ></PageNumber>
           </div>
         </div>
       </div>
@@ -246,4 +214,4 @@ const ExamPaper = () => {
   );
 };
 
-export default ExamPaper;
+export default ViewExamDetail;

@@ -1,21 +1,22 @@
 import { Link, Navigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import LoginFields from "../Constants/LoginFields";
-import DemoButton from "./ReusableComponents/DemoButton";
-import DemoInput from "./ReusableComponents/DemoInput";
+import LoginFields from "../../Constants/LoginFields";
+import DemoButton from "../ReusableComponents/DemoButton";
+import DemoInput from "../ReusableComponents/DemoInput";
 import {
   isLoginError,
   loginOnChange,
   loginRequest,
-} from "../Redux/action/userLogin";
+} from "../../Redux/action/userLogin";
 import { useDispatch, useSelector } from "react-redux";
-import Alert from "./ReusableComponents/Alert";
+import Alert from "../ReusableComponents/Alert";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { isLogin } from "./function";
-import OneLink from "./ReusableComponents/OneLink";
-import validation from "./validation";
+import { isLogin } from "../function";
+import OneLink from "../ReusableComponents/OneLink";
+import validation from "../validation";
 import { ToastContainer, toast } from "react-toastify";
+
 import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {

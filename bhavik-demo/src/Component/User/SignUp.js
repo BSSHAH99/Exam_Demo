@@ -1,20 +1,20 @@
 import React, { useEffect } from "react";
 import { Helmet } from "react-helmet";
-import DemoInput from "./ReusableComponents/DemoInput";
-import DemoRadioInput from "./ReusableComponents/DemoRadioInput";
-import DemoButton from "./ReusableComponents/DemoButton";
-import signupFields from "../Constants/SignupFields";
+import DemoInput from "../ReusableComponents/DemoInput";
+import DemoRadioInput from "../ReusableComponents/DemoRadioInput";
+import DemoButton from "../ReusableComponents/DemoButton";
+import signupFields from "../../Constants/SignupFields";
 import { useDispatch, useSelector } from "react-redux";
 import {
   issignUpError,
   signUpOnChange,
   signUpRequest,
-} from "../Redux/action/userSignup";
-import Alert from "./ReusableComponents/Alert";
-import OneLink from "./ReusableComponents/OneLink";
-import { isLogin } from "./function";
+} from "../../Redux/action/userSignup";
+import Alert from "../ReusableComponents/Alert";
+import OneLink from "../ReusableComponents/OneLink";
+import { isLogin } from "../function";
 import { useNavigate } from "react-router-dom";
-import validation from "./validation";
+import validation from "../validation";
 
 const SignUp = () => {
   const myState = useSelector((state) => state.userSignupReducer);

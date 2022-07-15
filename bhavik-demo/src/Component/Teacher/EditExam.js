@@ -1,20 +1,20 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { isTeacher, reset, resetAll } from "./function";
-import createExamFields from "../Constants/CreateExamFields";
-import DemoButton from "./ReusableComponents/DemoButton";
-import Loading from "./ReusableComponents/Loading";
+import { isTeacher, reset, resetAll } from "../function";
+import createExamFields from "../../Constants/CreateExamFields";
+import DemoButton from "../ReusableComponents/DemoButton";
+import Alert from "../ReusableComponents/Alert";
 
 import {
-  createExamData,
   createExaminitialstate,
   createExamRequest,
-} from "../Redux/action/createExam";
+} from "../../Redux/action/createExam";
 import { useState } from "react";
-import validation from "./validation";
-import { editExamData } from "../Redux/action/editExam";
-import { ExamDetailRequest } from "../Redux/action/viewExamDetail";
+import validation from "../validation";
+import { ExamDetailRequest } from "../../Redux/action/viewExamDetail";
+import Loading from "../ReusableComponents/Loading";
+import { editExamData } from "../../Redux/action/editExam";
 
 const initialData = {
   subjectName: "",
@@ -22,7 +22,12 @@ const initialData = {
   notes: [],
 };
 
-const CreateExam = () => {
+const EditExam = () => {
+  const viewExam = useSelector((state) => state.viewExamReducer.exam);
+  const exasmDetail = useSelector(
+    (state) => state.examDetailReducer.examDetail
+  );
+
   const search = useLocation().search;
   const id = new URLSearchParams(search).get("id");
   const [data, setData] = useState(initialData);
@@ -30,39 +35,20 @@ const CreateExam = () => {
   const [formValues, setFormValues] = useState({});
   const [formerror, setFormerror] = useState({});
   const [cloneData, setCloneData] = useState({});
-  // const [active, setActive] = useState(false);
 
-  const myState = useSelector((state) => state.createExamReducer);
   const naviget = useNavigate();
 
-  const viewExam = useSelector((state) => state.viewExamReducer.exam);
-  const exasmDetailState = useSelector((state) => state.examDetailReducer);
-
-  const exasmDetail = exasmDetailState.examDetail;
-  console.log("exasmDetail :>> ", exasmDetailState);
-  console.log("viewExam :>> ", viewExam);
-
   useEffect(() => {
+    dispatch(ExamDetailRequest(id));
     isTeacher(naviget);
-    // console.log(window.location.href);
-    console.log("exasmDetail :>> ", exasmDetail);
 
-    if (id) {
-      setTimeout(() => {
-        if (data.questions) {
-          editValue(index - 1);
-          console.log("exasmDetail is calingc dfgdghdfgdfgdfgdfgdfgdfgdf");
-        }
-      }, 2000);
-    }
-
-    console.log("data this is 51 liens :>> ", data);
-    // setActive(true);
     createExamFields.map((data) =>
       setFormValues((prv) => ({ ...prv, [data.name]: "" }))
     );
+
     dispatch(createExaminitialstate());
   }, []);
+
   useEffect(() => {
     if (Object.keys(cloneData || {})?.length) {
       setFormValues(cloneData);
@@ -83,7 +69,6 @@ const CreateExam = () => {
       return;
     } else {
       data.subjectName = formValues.subjectName || data.subjectName;
-
       data.questions[index - 1] = {
         question: formValues.question,
         answer: formValues.answer,
@@ -95,24 +80,12 @@ const CreateExam = () => {
         ],
       };
       data.notes[index - 1] = formValues.notes;
-
-      if (index < 15) {
-        setFormValues(reset(formValues));
-        setIndex(index + 1);
-      } else if ((index) => 15) {
-        console.log("data.questions", data.questions.length);
-        console.log("initialData.questions :>> ", initialData.questions.length);
-        if (id) {
-          console.log("data :>> ", data);
-          dispatch(editExamData(id, data));
-        } else if (!id) {
-          // dispatch(createExamData(initialData));
-          dispatch(createExamRequest(initialData, naviget));
-          console.log("api caling from heare");
-        }
-      }
     }
-    console.log("initialData", data);
+
+    if (index === 15) {
+      console.log("data :>> ", data);
+      dispatch(editExamData(id, data));
+    }
   };
 
   const editValue = (number) => {
@@ -158,113 +131,22 @@ const CreateExam = () => {
     editValue(index);
     setIndex(index + 1);
   }
-  // if (id) {
-  //   dispatch(ExamDetailRequest(id));
-  // }
+  viewExam.find((items) =>
+    items._id === id
+      ? ((data.notes = items.notes), (data.subjectName = items.subjectName))
+      : null
+  );
 
-  if (id) {
-    console.log("this is edit code is heare");
-    viewExam.find((items) =>
-      items._id === id
-        ? ((data.notes = items.notes), (data.subjectName = items.subjectName))
-        : null
-    );
-    data.questions = exasmDetail.questions || "";
+  data.questions = exasmDetail.questions || "";
 
-    formValues.subjectName = data.subjectName;
-  }
+  formValues.subjectName = data.subjectName;
 
   console.log("data", data);
+  // console.log("formValues :>> ", formValues);
+  // console.log("index :>> ", index);
+  // console.log("exasmDetail :>> ", exasmDetail?.questions);
+  // console.log("cloneData :>> ", cloneData);
   return (
-    // <React.Fragment>
-    //   <div>
-    //     <Helmet>
-    //       <title>Create Exam</title>
-    //       <meta name="from" content="Create Exam" />
-    //       <meta name="exam" content="Create-Exam" />
-    //     </Helmet>
-    //   </div>
-
-    //   <div className="container my-3">
-    //     <div className="container">
-    //       <form onSubmit={handalSubmit}>
-    //         {createExamFields.map((input, i) => {
-    //           switch (input.type) {
-    //             case "dropdown":
-    //               return (
-    //                 <div key={i}>
-    //                   <DemoDropdown
-    //                     {...input}
-    //                     value={userData[input.name] || ""}
-    //                     onChange={handleChange}
-    //                   ></DemoDropdown>
-    //                 </div>
-    //               );
-    //             case "radio":
-    //               return (
-    //                 <div>
-    //                   {input.value.map((items, index) => {
-    //                     console.log("items :>> ", items);
-    //                     return (
-    //                       <div
-    //                         style={{ display: "flex", alignItems: "center" }}
-    //                         key={index}
-    //                       >
-    //                         <div className="form-check">
-    //                           <input
-    //                             className="form-check-input"
-    //                             type="radio"
-    //                             name="flexRadioDisabled"
-    //                             id="flexRadioDisabled"
-    //                           />
-    //                         </div>
-    //                         <DemoRadioInput
-    //                           key={index}
-    //                           {...input}
-    //                           value={userData[input.name]}
-    //                           onChange={handleChange}
-    //                           checked={
-    //                             input?.label === userData[input.name] || ""
-    //                           }
-    //                         ></DemoRadioInput>
-    //                         {typeof items === "String" ? (
-    //                           <label>{items}</label>
-    //                         ) : (
-    //                           <Input
-    //                             {...items}
-    //                             type={items.type}
-    //                             placeholder={items.placeholder}
-    //                             lable={items}
-    //                             name={items}
-    //                             onChange={handleChange}
-    //                             value={userData[items.name] ?? ""}
-    //                           ></Input>
-    //                         )}
-    //                         {items.name !== "answer" ? (
-    //                           <p style={{ color: "red" }}></p>
-    //                         ) : null}
-    //                       </div>
-    //                     );
-    //                   })}
-    //                 </div>
-    //               );
-    //             default:
-    //               return (
-    //                 <div key={i}>
-    //                   <DemoInput
-    //                     {...input}
-    //                     value={userData[input.name] || ""}
-    //                     onChange={handleChange}
-    //                   />
-    //                 </div>
-    //               );
-    //           }
-    //         })}
-    //       </form>
-    //     </div>
-    //   </div>
-    // </React.Fragment>
-
     <div>
       <div className="container my-3">
         <div className="container">
@@ -318,7 +200,11 @@ const CreateExam = () => {
                                             className="form-control"
                                             type={ele.type}
                                             name={ele.name}
-                                            value={formValues[ele.name] || ""}
+                                            value={
+                                              formValues[ele.name] || ""
+                                              // ? data[ele.name]
+                                              // : formValues[ele.name]
+                                            }
                                             placeholder={ele.placeholder}
                                             onChange={handleChange}
                                           />
@@ -356,12 +242,7 @@ const CreateExam = () => {
                                   <input
                                     className="form-control"
                                     label={data.label}
-                                    disabled={
-                                      // data.name === "subjectName" && index > 1
-                                      //   ? true
-                                      //   :
-                                      data?.disabled
-                                    }
+                                    disabled={data?.disabled}
                                     value={formValues[data.name]}
                                     type={data.type}
                                     name={data.name}
@@ -394,15 +275,10 @@ const CreateExam = () => {
               >
                 Next
               </DemoButton>
-              {id ? (
-                <DemoButton type={"submit"}>Update</DemoButton>
-              ) : (
-                <DemoButton type={"submit"}>
-                  {data.questions.length === 14
-                    ? "Create Exam"
-                    : "Add Question"}
-                </DemoButton>
-              )}
+              <DemoButton type={"submit"}>
+                Update
+                {/* {data.questions.length === 14 ? "Done" : "Submit"} */}
+              </DemoButton>
             </form>
           )}
         </div>
@@ -411,4 +287,4 @@ const CreateExam = () => {
   );
 };
 
-export default CreateExam;
+export default EditExam;

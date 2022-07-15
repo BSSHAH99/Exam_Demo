@@ -1,19 +1,19 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { studentProfileRequest } from "../Redux/action/studentProfile";
-import { isLogin, isStudent } from "./function";
-import EditStudentProfileFields from "../Constants/EditStudentProfileFields";
-import DemoButton from "./ReusableComponents/DemoButton";
-import validation from "./validation";
-import DemoInput from "./ReusableComponents/DemoInput";
+import { studentProfileRequest } from "../../Redux/action/studentProfile";
+import { isLogin, isStudent } from "../function";
+import EditStudentProfileFields from "../../Constants/EditStudentProfileFields";
+import DemoButton from "../ReusableComponents/DemoButton";
+import validation from "../validation";
+import DemoInput from "../ReusableComponents/DemoInput";
 import {
   editStudentProfileOnChange,
   editStudentProfileRequest,
   iseditStudentProfileError,
   setStudentProfile,
-} from "../Redux/action/editStudentProfile";
-import Alert from "./ReusableComponents/Alert";
+} from "../../Redux/action/editStudentProfile";
+import Alert from "../ReusableComponents/Alert";
 
 const EditStudentProfile = () => {
   const dispatch = useDispatch();

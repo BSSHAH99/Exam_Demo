@@ -2,18 +2,18 @@ import React, { useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import newPasswordFields from "../Constants/NewPasswordFields";
+import newPasswordFields from "../../Constants/NewPasswordFields";
 import {
   isNewPassworError,
   newPasswordOnChange,
   newPasswordTokenCheck,
-} from "../Redux/action/newPassword";
-import { isLogin } from "./function";
-import Alert from "./ReusableComponents/Alert";
-import DemoButton from "./ReusableComponents/DemoButton";
-import DemoInput from "./ReusableComponents/DemoInput";
-import OneLink from "./ReusableComponents/OneLink";
-import validation from "./validation";
+} from "../../Redux/action/newPassword";
+import { isLogin } from "../function";
+import Alert from "../ReusableComponents/Alert";
+import DemoButton from "../ReusableComponents/DemoButton";
+import DemoInput from "../ReusableComponents/DemoInput";
+import OneLink from "../ReusableComponents/OneLink";
+import validation from "../validation";
 
 const NewPassword = () => {
   const dispatch = useDispatch();

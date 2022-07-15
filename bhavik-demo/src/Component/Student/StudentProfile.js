@@ -5,14 +5,14 @@ import { useNavigate } from "react-router-dom";
 import {
   setStudentData,
   setStudentProfile,
-} from "../Redux/action/editStudentProfile";
-import { studentProfileRequest } from "../Redux/action/studentProfile";
+} from "../../Redux/action/editStudentProfile";
+import { studentProfileRequest } from "../../Redux/action/studentProfile";
 import EditStudentProfile from "./EditStudentProfile";
-import { isStudent } from "./function";
-import DemoButton from "./ReusableComponents/DemoButton";
-import DemoTable from "./ReusableComponents/DemoTable";
-import Loading from "./ReusableComponents/Loading";
-import Table from "./ReusableComponents/Table";
+import { isStudent } from "../function";
+import DemoButton from "../ReusableComponents/DemoButton";
+import DemoTable from "../ReusableComponents/DemoTable";
+import Loading from "../ReusableComponents/Loading";
+import Table from "../ReusableComponents/Table";
 
 const StudentProfile = () => {
   const navigate = useNavigate();

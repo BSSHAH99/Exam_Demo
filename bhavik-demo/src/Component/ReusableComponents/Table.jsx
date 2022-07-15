@@ -1,7 +1,7 @@
 import React from 'react'
 import DemoButton from './DemoButton';
 
-const Table = ({ tableheadings, tableData, Detail, DetailName, Edit, EditName, Delete, ResultName, Result, DeleteName }) => {
+const Table = ({ tableheadings, tableData, Detail, DetailName, Edit, EditName, Delete, ResultName, Result, DeleteName, GiveExam, GiveExamName }) => {
 
     let keys
 
@@ -12,20 +12,6 @@ const Table = ({ tableheadings, tableData, Detail, DetailName, Edit, EditName, D
         keys = tableData && Array.isArray(tableData) ? Object.keys(tableData[0] || {}) : [];
 
     }
-
-
-
-
-    // const keys = ["subjectName", "email", "Result"];
-
-    // let keys = [];
-    // if (tableData && Array.isArray(tableData)) {
-    //     Object.entries(tableData[0]).map(([k]) => {
-    //         k === "_id" || k === "__v" || k === "notes" ? console.log("") : keys.push(k);
-
-    //     })
-    // }
-    // console.log('keys :>> ', keys);
     return (
         <div>
             <div className="container my-3">
@@ -35,11 +21,6 @@ const Table = ({ tableheadings, tableData, Detail, DetailName, Edit, EditName, D
                             <tr>
                                 {window.location.pathname === "/preview-exam" && <th>id</th>}
                                 {
-                                    // tableheadings ? tableheadings.map((key, i) => {
-                                    //     return (
-                                    //         <th key={i}>{key.toUpperCase()}</th>
-                                    //     )
-                                    // }) :
                                     keys?.map((key, i) => {
                                         return (
                                             <th key={i}>{key.toUpperCase()}</th>
@@ -51,12 +32,12 @@ const Table = ({ tableheadings, tableData, Detail, DetailName, Edit, EditName, D
                         <tbody>
                             {tableData?.length > 0 &&
                                 tableData.map((data, index) => {
+                                    // console.log('data :>> ', data);
                                     return (
                                         <tr key={index}>
-                                            {/* {window.location.pathname === "/preview-exam" && <td>{index + 1}</td>} */}
                                             {keys.map((key, i) => {
+                                                // console.log('keys :>> ', keys);
                                                 return (
-                                                    // value[key]===undefined ? null:
                                                     <React.Fragment key={i}>
                                                         {Array.isArray(data[key]) ? (
                                                             window.location.pathname === "/student-deshbord" || window.location.pathname === "/preview-exam" ? (
@@ -75,24 +56,31 @@ const Table = ({ tableheadings, tableData, Detail, DetailName, Edit, EditName, D
                                                     </React.Fragment>
                                                 );
                                             })}
-                                            {Result &&
-                                                <React.Fragment>
-                                                    <td>
-                                                        <DemoButton onClick={(e) => Result(e, index, data._id)}> {ResultName}</DemoButton>
-                                                    </td>
-                                                </React.Fragment>
-                                            }
                                             {Detail &&
                                                 <React.Fragment>
                                                     <td>
-                                                        <DemoButton onClick={(e) => Detail(e, index, data._id)}> {DetailName}</DemoButton>
+                                                        <DemoButton onClick={(e) => Detail(e, index, data)}> {DetailName}</DemoButton>
+                                                    </td>
+                                                </React.Fragment>
+                                            }
+                                            {Result &&
+                                                <React.Fragment>
+                                                    <td>
+                                                        <DemoButton onClick={(e) => Result(e, index, data._id)} disabled={data.Result.length > 0 ? false : true}> {ResultName}</DemoButton>
                                                     </td>
                                                 </React.Fragment>
                                             }
                                             {Edit &&
                                                 <React.Fragment>
                                                     <td>
-                                                        <DemoButton onClick={(e) => Edit(e, index, data._id)}> {EditName}</DemoButton>
+                                                        <DemoButton onClick={(e) => Edit(e, index, data._id)} > {EditName}</DemoButton>
+                                                    </td>
+                                                </React.Fragment>
+                                            }
+                                            {GiveExam &&
+                                                <React.Fragment>
+                                                    <td>
+                                                        <DemoButton onClick={(e) => GiveExam(e, index, data._id)} disabled={data.Result.length > 0 ? true : false}> {GiveExamName}</DemoButton>
                                                     </td>
                                                 </React.Fragment>
                                             }
@@ -103,7 +91,6 @@ const Table = ({ tableheadings, tableData, Detail, DetailName, Edit, EditName, D
                                                     </td>
                                                 </React.Fragment>
                                             }
-
                                         </tr>
                                     );
                                 })}

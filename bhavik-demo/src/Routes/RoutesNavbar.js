@@ -1,26 +1,25 @@
 import React from "react";
 import { Routes } from "react-router-dom";
-import ForgotPassword from "../Component/ForgotPassword";
+import ForgotPassword from "../Component/User/ForgotPassword";
 import Home from "../Component/Home";
-import Login from "../Component/Login";
-import NewPassword from "../Component/NewPassword";
+import Login from "../Component/User/Login";
+import NewPassword from "../Component/User/NewPassword";
 import NoMatch from "../Component/NoMatch";
-import ResetPassword from "../Component/ResetPassword";
-import SignUp from "../Component/SignUp";
-import StudentForExam from "../Component/VerifiedStudent";
-import TeacherDeshbord from "../Component/TeacherDeshbord";
+import ResetPassword from "../Component/User/ResetPassword";
+import SignUp from "../Component/User/SignUp";
+import StudentForExam from "../Component/Teacher/VerifiedStudent";
+import TeacherDeshbord from "../Component/Teacher/TeacherDeshbord";
 import { mapRoute } from "./FunctionRouteMap";
-import StudentDetail from "../Component/StudentDetail";
-import CreateExam from "../Component/CreateExam";
-import ViewExam from "../Component/ViewExam";
-import ViewExamDetail from "../Component/ViewExamDetail";
-import EditExam from "../Component/EditExam";
-import DeleteExam from "../Component/DeleteExam";
-import AllExamStudent from "../Component/AllExamStudent";
-import ExamPaper from "../Component/ExamPaper";
-import StudentProfile from "../Component/StudentProfile";
-import EditStudentProfile from "../Component/EditStudentProfile";
-import Result from "../Component/Result";
+import StudentDetail from "../Component/Teacher/StudentDetail";
+import CreateExam from "../Component/Teacher/CreateExam";
+import ViewExam from "../Component/Teacher/ViewExam";
+import ViewExamDetail from "../Component/Teacher/ViewExamDetail";
+import EditExam from "../Component/Teacher/EditExam";
+import AllExamStudent from "../Component/Student/AllExamStudent";
+import ExamPaper from "../Component/Student/ExamPaper";
+import StudentProfile from "../Component/Student/StudentProfile";
+import EditStudentProfile from "../Component/Student/EditStudentProfile";
+import Result from "../Component/Student/Result";
 
 const RoutesNavbar = () => {
   const n = [
@@ -92,7 +91,6 @@ const RoutesNavbar = () => {
     {
       path: "/edit-exam/",
       goto: <CreateExam />,
-      // goto: <EditExam />,
       requireAuth: true,
     },
     {
@@ -100,11 +98,11 @@ const RoutesNavbar = () => {
       goto: <EditExam />,
       requireAuth: true,
     },
-    {
-      path: "/delete-exam/",
-      goto: <DeleteExam />,
-      requireAuth: true,
-    },
+    // {
+    //   path: "/delete-exam/",
+    //   goto: <DeleteExam />,
+    //   requireAuth: true,
+    // },
     {
       path: "/student-deshbord",
       goto: <AllExamStudent />,
@@ -130,6 +128,7 @@ const RoutesNavbar = () => {
       goto: <Result />,
       requireAuth: true,
     },
+
     {
       path: "*",
       goto: <NoMatch />,
@@ -140,5 +139,3 @@ const RoutesNavbar = () => {
 };
 
 export default RoutesNavbar;
-
-// newPassword

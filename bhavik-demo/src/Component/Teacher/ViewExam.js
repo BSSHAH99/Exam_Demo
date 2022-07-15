@@ -2,12 +2,15 @@ import React, { useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { deleteExamRequest, ViewExamRequest } from "../Redux/action/viewExam";
-import { ExamDetailRequest } from "../Redux/action/viewExamDetail";
-import { isTeacher } from "./function";
-import DemoButton from "./ReusableComponents/DemoButton";
-import DemoTable from "./ReusableComponents/DemoTable";
-import Loading from "./ReusableComponents/Loading";
+import {
+  deleteExamRequest,
+  ViewExamRequest,
+} from "../../Redux/action/viewExam";
+import { ExamDetailRequest } from "../../Redux/action/viewExamDetail";
+import { isTeacher } from "../function";
+import DemoButton from "../ReusableComponents/DemoButton";
+import Table from "../ReusableComponents/Table";
+import Loading from "../ReusableComponents/Loading";
 
 const ViewExam = () => {
   const navigate = useNavigate();
@@ -18,6 +21,7 @@ const ViewExam = () => {
 
   // const tableheadings = Object.keys(exam[0]);
   let tableData = Object.values(exam || {});
+  let tableheadings = ["subjectName", "email"];
   const dispatch = useDispatch();
 
   // console.log("tableheadings :>> ", tableheadings);
@@ -29,7 +33,7 @@ const ViewExam = () => {
   }, []);
 
   const onDetail = (e, index, id) => {
-    // console.log("e, index, data._id :>> ", id);
+    dispatch(ExamDetailRequest(id));
     navigate("/exam-detail?id=" + id);
   };
 
@@ -64,7 +68,8 @@ const ViewExam = () => {
                   Create Exam
                 </DemoButton>
               </div>
-              <DemoTable
+              <Table
+                tableheadings={tableheadings}
                 tableData={tableData}
                 Detail={onDetail}
                 DetailName={"Detail"}
@@ -72,7 +77,7 @@ const ViewExam = () => {
                 EditName={"Edit"}
                 Delete={onDelete}
                 DeleteName={"Delete"}
-              ></DemoTable>
+              ></Table>
             </React.Fragment>
           )}
         </div>

@@ -2,10 +2,10 @@ import React, { useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { fetchStudentRequest } from "../Redux/action/getStudent";
-import { isTeacher } from "./function";
-import DemoTable from "./ReusableComponents/DemoTable";
-import Loading from "./ReusableComponents/Loading";
+import { fetchStudentRequest } from "../../Redux/action/getStudent";
+import { isTeacher } from "../function";
+import Table from "../ReusableComponents/Table";
+import Loading from "../ReusableComponents/Loading";
 
 const TeacherDeshbord = () => {
   const navigate = useNavigate();
@@ -14,6 +14,7 @@ const TeacherDeshbord = () => {
   const student = myState.student;
 
   let tableData = Object.values(student || {});
+  let tableheadings = ["name", "email", "status"];
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -28,7 +29,7 @@ const TeacherDeshbord = () => {
           {myState.loading ? (
             <Loading></Loading>
           ) : (
-            <DemoTable tableData={tableData}></DemoTable>
+            <Table tableheadings={tableheadings} tableData={tableData}></Table>
           )}
         </div>
       </div>

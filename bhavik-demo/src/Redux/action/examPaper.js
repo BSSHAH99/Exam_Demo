@@ -29,10 +29,7 @@ export const giveExamRequest = (id, data, navigate) => {
   return async (dispatch) => {
     await Api.post("/student/giveExam?id=" + id, data)
       .then((res) => {
-        console.log("res.data", res.data);
-        setTimeout(() => {
-          navigate("/result?id=" + id);
-        }, 3000);
+        navigate("/student-deshbord");
       })
       .catch((error) => console.log("error.message", error.message));
   };

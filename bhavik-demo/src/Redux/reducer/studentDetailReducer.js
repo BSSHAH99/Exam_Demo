@@ -21,6 +21,12 @@ const studentDetailReducer = (state = initialState, action) => {
         studentDetail: [],
         error: action.payload,
       };
+    case ActionType.STUDENT_DETAIL_RESET:
+      return {
+        ...state,
+        loading: true,
+        studentDetail: [],
+      };
     default:
       return {
         ...state,

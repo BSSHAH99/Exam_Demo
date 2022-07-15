@@ -1,20 +1,20 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { isTeacher, reset, resetAll } from "./function";
-import createExamFields from "../Constants/CreateExamFields";
-import DemoButton from "./ReusableComponents/DemoButton";
-import Alert from "./ReusableComponents/Alert";
+import { isTeacher, reset, resetAll } from "../function";
+import createExamFields from "../../Constants/CreateExamFields";
+import DemoButton from "../ReusableComponents/DemoButton";
+import Loading from "../ReusableComponents/Loading";
 
 import {
+  createExamData,
   createExaminitialstate,
   createExamRequest,
-} from "../Redux/action/createExam";
+} from "../../Redux/action/createExam";
 import { useState } from "react";
-import validation from "./validation";
-import { ExamDetailRequest } from "../Redux/action/viewExamDetail";
-import Loading from "./ReusableComponents/Loading";
-import { editExamData } from "../Redux/action/editExam";
+import validation from "../validation";
+import { editExamData } from "../../Redux/action/editExam";
+import { ExamDetailRequest } from "../../Redux/action/viewExamDetail";
 
 const initialData = {
   subjectName: "",
@@ -22,12 +22,7 @@ const initialData = {
   notes: [],
 };
 
-const EditExam = () => {
-  const viewExam = useSelector((state) => state.viewExamReducer.exam);
-  const exasmDetail = useSelector(
-    (state) => state.examDetailReducer.examDetail
-  );
-
+const CreateExam = () => {
   const search = useLocation().search;
   const id = new URLSearchParams(search).get("id");
   const [data, setData] = useState(initialData);
@@ -35,20 +30,38 @@ const EditExam = () => {
   const [formValues, setFormValues] = useState({});
   const [formerror, setFormerror] = useState({});
   const [cloneData, setCloneData] = useState({});
+  // const [active, setActive] = useState(false);
 
+  const myState = useSelector((state) => state.createExamReducer);
   const naviget = useNavigate();
 
-  useEffect(() => {
-    dispatch(ExamDetailRequest(id));
-    isTeacher(naviget);
+  const viewExam = useSelector((state) => state.viewExamReducer.exam);
+  const exasmDetailState = useSelector((state) => state.examDetailReducer);
 
+  const exasmDetail = exasmDetailState.examDetail;
+  console.log("exasmDetail :>> ", exasmDetailState);
+  console.log("viewExam :>> ", viewExam);
+
+  useEffect(() => {
+    isTeacher(naviget);
+    console.log("exasmDetail :>> ", exasmDetail);
+
+    if (id) {
+      setTimeout(() => {
+        if (data.questions) {
+          editValue(index - 1);
+          console.log("exasmDetail is calingc dfgdghdfgdfgdfgdfgdfgdfgdf");
+        }
+      }, 2000);
+    }
+
+    console.log("data this is 51 liens :>> ", data);
+    // setActive(true);
     createExamFields.map((data) =>
       setFormValues((prv) => ({ ...prv, [data.name]: "" }))
     );
-
     dispatch(createExaminitialstate());
   }, []);
-
   useEffect(() => {
     if (Object.keys(cloneData || {})?.length) {
       setFormValues(cloneData);
@@ -69,6 +82,7 @@ const EditExam = () => {
       return;
     } else {
       data.subjectName = formValues.subjectName || data.subjectName;
+
       data.questions[index - 1] = {
         question: formValues.question,
         answer: formValues.answer,
@@ -80,12 +94,24 @@ const EditExam = () => {
         ],
       };
       data.notes[index - 1] = formValues.notes;
-    }
 
-    if (index === 15) {
-      console.log("data :>> ", data);
-      dispatch(editExamData(id, data));
+      if (index < 15) {
+        setFormValues(reset(formValues));
+        setIndex(index + 1);
+      } else if ((index) => 15) {
+        console.log("data.questions", data.questions.length);
+        console.log("initialData.questions :>> ", initialData.questions.length);
+        if (id) {
+          console.log("data :>> ", data);
+          dispatch(editExamData(id, data));
+        } else if (!id) {
+          // dispatch(createExamData(initialData));
+          dispatch(createExamRequest(initialData, naviget));
+          console.log("api caling from heare");
+        }
+      }
     }
+    console.log("initialData", data);
   };
 
   const editValue = (number) => {
@@ -131,21 +157,23 @@ const EditExam = () => {
     editValue(index);
     setIndex(index + 1);
   }
-  viewExam.find((items) =>
-    items._id === id
-      ? ((data.notes = items.notes), (data.subjectName = items.subjectName))
-      : null
-  );
+  // if (id) {
+  //   dispatch(ExamDetailRequest(id));
+  // }
 
-  data.questions = exasmDetail.questions || "";
+  if (id) {
+    console.log("this is edit code is heare");
+    viewExam.find((items) =>
+      items._id === id
+        ? ((data.notes = items.notes), (data.subjectName = items.subjectName))
+        : null
+    );
+    data.questions = exasmDetail.questions || "";
 
-  formValues.subjectName = data.subjectName;
+    formValues.subjectName = data.subjectName;
+  }
 
   console.log("data", data);
-  // console.log("formValues :>> ", formValues);
-  // console.log("index :>> ", index);
-  // console.log("exasmDetail :>> ", exasmDetail?.questions);
-  // console.log("cloneData :>> ", cloneData);
   return (
     <div>
       <div className="container my-3">
@@ -200,11 +228,7 @@ const EditExam = () => {
                                             className="form-control"
                                             type={ele.type}
                                             name={ele.name}
-                                            value={
-                                              formValues[ele.name] || ""
-                                              // ? data[ele.name]
-                                              // : formValues[ele.name]
-                                            }
+                                            value={formValues[ele.name] || ""}
                                             placeholder={ele.placeholder}
                                             onChange={handleChange}
                                           />
@@ -242,7 +266,12 @@ const EditExam = () => {
                                   <input
                                     className="form-control"
                                     label={data.label}
-                                    disabled={data?.disabled}
+                                    disabled={
+                                      // data.name === "subjectName" && index > 1
+                                      //   ? true
+                                      //   :
+                                      data?.disabled
+                                    }
                                     value={formValues[data.name]}
                                     type={data.type}
                                     name={data.name}
@@ -275,10 +304,15 @@ const EditExam = () => {
               >
                 Next
               </DemoButton>
-              <DemoButton type={"submit"}>
-                Update
-                {/* {data.questions.length === 14 ? "Done" : "Submit"} */}
-              </DemoButton>
+              {id ? (
+                <DemoButton type={"submit"}>Update</DemoButton>
+              ) : (
+                <DemoButton type={"submit"}>
+                  {data.questions.length === 14
+                    ? "Create Exam"
+                    : "Add Question"}
+                </DemoButton>
+              )}
             </form>
           )}
         </div>
@@ -287,4 +321,4 @@ const EditExam = () => {
   );
 };
 
-export default EditExam;
+export default CreateExam;

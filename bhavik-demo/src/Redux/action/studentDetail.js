@@ -24,3 +24,9 @@ export const fetchStudentDetailFailure = (error) => {
     payload: error,
   };
 };
+
+export const StudentDetailReset = () => {
+  return {
+    type: ActionType.STUDENT_DETAIL_RESET,
+  };
+};

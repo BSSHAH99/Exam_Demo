@@ -1,23 +1,22 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { allExamStudentRequest } from "../Redux/action/allExamStudent";
-import { fetchExamPaperRequest } from "../Redux/action/examPaper";
-import { isStudent } from "./function";
-import DemoTable from "./ReusableComponents/DemoTable";
-import Loading from "./ReusableComponents/Loading";
-import Table from "./ReusableComponents/Table";
-import TestTable from "./ReusableComponents/TestTable";
+import { allExamStudentRequest } from "../../Redux/action/allExamStudent";
+import { fetchExamPaperRequest } from "../../Redux/action/examPaper";
+import { isStudent } from "../function";
+import Loading from "../ReusableComponents/Loading";
+import Modal from "../ReusableComponents/Modal";
+import Table from "../ReusableComponents/Table";
+// import { Button, Modal } from "react-bootstrap";
 
 const AllExamStudent = () => {
+  const [show, setShow] = useState(false);
   const navigate = useNavigate();
 
   const myState = useSelector((state) => state.allExamStudentReducer);
   const exam = myState.exam;
 
   let tableData = Object.values(exam || {});
-
-  // let tableheadings = ["subjectName", "email", "Result", "notes"];
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -25,14 +24,20 @@ const AllExamStudent = () => {
     dispatch(allExamStudentRequest());
   }, []);
 
-  const onDetail = (e, index, id) => {
+  const onGiveExam = (e, index, id) => {
     navigate("/exam-paper?id=" + id);
     dispatch(fetchExamPaperRequest(id));
   };
 
   const onResult = (e, index, id) => {
     navigate("/result?id=" + id);
-    // dispatch(fetchExamPaperRequest(id));
+  };
+
+  const onDetail = (e, index, data) => {
+    setShow(true);
+    // navigate("/student-exam-detail", { state: data });
+
+    // navigate("/student-exam-detail?id=" + id);
   };
 
   let tableheadings = ["subjectName", "email"];
@@ -43,23 +48,25 @@ const AllExamStudent = () => {
           {myState.loading ? (
             <Loading></Loading>
           ) : (
-            // <DemoTable
-            //   tableData={tableData}
-            //   Detail={onDetail}
-            //   DetailName={"Give Exam"}
-            //   tableheadings={tableheadings}
-            // ></DemoTable>
-
             <Table
               tableData={tableData}
               tableheadings={tableheadings}
               Result={onResult}
               ResultName={"Result"}
+              GiveExam={onGiveExam}
+              GiveExamName={"Give Exam"}
               Detail={onDetail}
-              DetailName={"Give Exam"}
+              DetailName={"Detail"}
             ></Table>
           )}
         </div>
+        {/* <Modal show={true}>
+          <Modal.Header>deafksljsdfsfsd</Modal.Header>
+          <Modal.Body>sadfgsdfgsdgasdgs</Modal.Body>
+          <Modal.Footer>dfhdfghkdlfhgbkvdfzhglvfdkjgvdf</Modal.Footer>
+        </Modal>
+        <Button>Open Modal</Button> */}
+        <Modal show={true}></Modal>
       </div>
     </>
   );

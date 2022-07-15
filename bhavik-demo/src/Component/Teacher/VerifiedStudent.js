@@ -1,11 +1,10 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { fetchVerifiedStudentRequest } from "../Redux/action/getVerifiedStudent";
-import { isTeacher } from "./function";
-import DemoTable from "./ReusableComponents/DemoTable";
-import Loading from "./ReusableComponents/Loading";
-import TestTable from "./ReusableComponents/TestTable";
+import { fetchVerifiedStudentRequest } from "../../Redux/action/getVerifiedStudent";
+import { isTeacher } from "../function";
+import Table from "../ReusableComponents/Table";
+import Loading from "../ReusableComponents/Loading";
 
 const VerifiedStudent = () => {
   const navigate = useNavigate();
@@ -14,6 +13,7 @@ const VerifiedStudent = () => {
   const student = myState.student;
 
   let tableData = Object.values(student || {});
+  let tableheadings = ["name", "email", "status"];
   const dispatch = useDispatch();
   useEffect(() => {
     isTeacher(navigate);
@@ -33,16 +33,12 @@ const VerifiedStudent = () => {
           {myState.loading ? (
             <Loading></Loading>
           ) : (
-            <DemoTable
+            <Table
+              tableheadings={tableheadings}
               tableData={tableData}
               Detail={onDetail}
               DetailName={"Detail"}
-            ></DemoTable>
-            // <TestTable
-            //   tableData={tableData}
-            //   Detail={onDetail}
-            //   DetailName={"Detail"}
-            // ></TestTable>
+            ></Table>
           )}
         </div>
       </div>
