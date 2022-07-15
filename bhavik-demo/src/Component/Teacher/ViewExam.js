@@ -37,10 +37,10 @@ const ViewExam = () => {
     navigate("/exam-detail?id=" + id);
   };
 
-  const onEdit = (e, index, id) => {
+  const onEdit = (e, index, id, data) => {
     dispatch(ExamDetailRequest(id));
     // console.log("e, index, data._id :>> ", id);
-    navigate("/edit-exam?id=" + id);
+    navigate("/edit-exam?id=" + id, { state: data });
   };
 
   const onDelete = (e, index, id) => {

@@ -19,7 +19,6 @@ import AllExamStudent from "../Component/Student/AllExamStudent";
 import ExamPaper from "../Component/Student/ExamPaper";
 import StudentProfile from "../Component/Student/StudentProfile";
 import EditStudentProfile from "../Component/Student/EditStudentProfile";
-import Result from "../Component/Student/Result";
 
 const RoutesNavbar = () => {
   const n = [
@@ -91,18 +90,9 @@ const RoutesNavbar = () => {
     {
       path: "/edit-exam/",
       goto: <CreateExam />,
+      // goto: <EditExam />,
       requireAuth: true,
     },
-    {
-      path: "/abcd/",
-      goto: <EditExam />,
-      requireAuth: true,
-    },
-    // {
-    //   path: "/delete-exam/",
-    //   goto: <DeleteExam />,
-    //   requireAuth: true,
-    // },
     {
       path: "/student-deshbord",
       goto: <AllExamStudent />,
@@ -121,11 +111,6 @@ const RoutesNavbar = () => {
     {
       path: "/student-profile-edit",
       goto: <EditStudentProfile />,
-      requireAuth: true,
-    },
-    {
-      path: "/result",
-      goto: <Result />,
       requireAuth: true,
     },
 

@@ -16,7 +16,6 @@ import { isLogin } from "../function";
 import OneLink from "../ReusableComponents/OneLink";
 import validation from "../validation";
 import { ToastContainer, toast } from "react-toastify";
-
 import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
@@ -48,7 +47,7 @@ const Login = () => {
   const handleChange = (e) => {
     dispatch(loginOnChange(e.target.name, e.target.value));
   };
-
+  // toast.success("hiii bhavik");
   return (
     <>
       <div>
@@ -64,6 +63,7 @@ const Login = () => {
           {!myState.message ? null : (
             <Alert className={"alert alert-danger"}>{myState.message}</Alert>
           )}
+          <ToastContainer></ToastContainer>
           <form onSubmit={handalSubmit}>
             {LoginFields.map((input, index) => {
               return (

@@ -106,107 +106,111 @@ const ViewExamDetail = () => {
             {!data.questions.length > 0 ? (
               <Loading></Loading>
             ) : (
-              <form>
-                <h2> Question No : {index}</h2>
-                {ExamPaperFields.map((data, i) => {
-                  return (
-                    <div key={i}>
-                      {(() => {
-                        switch (data.type) {
-                          case "radio":
-                            return (
-                              <div>
-                                {data.value.map((ele, i) => {
-                                  return (
-                                    <div
-                                      className="my-3"
-                                      style={{ display: "flex" }}
-                                      key={i}
-                                    >
-                                      <input
-                                        className="form-check-input mx-3"
-                                        type="radio"
-                                        name={data.name}
-                                        disabled={true}
-                                        value={
-                                          typeof ele === "string"
-                                            ? ele
-                                            : formValues[ele.name]
-                                        }
-                                        checked={
-                                          formValues[ele.name] &&
-                                          formValues[ele.name] ===
-                                            formValues.answer
-                                        }
-                                      />
-                                      {data.name !== "answer" ? (
-                                        <p style={{ color: "red" }}></p>
-                                      ) : null}
-                                      {typeof ele === "string" ? (
-                                        <label>{ele}</label>
-                                      ) : (
-                                        <>
-                                          <div className="mb-3 ">
-                                            <input
-                                              className="form-control"
-                                              type={ele.type}
-                                              disabled={true}
-                                              name={ele.name}
-                                              value={formValues[ele.name] || ""}
-                                              placeholder={ele.placeholder}
-                                            />
-                                          </div>
-                                        </>
-                                      )}
-                                    </div>
-                                  );
-                                })}
-                              </div>
-                            );
-                          default:
-                            return (
-                              <div>
+              <>
+                <form>
+                  <h2> Question No : {index}</h2>
+                  {ExamPaperFields.map((data, i) => {
+                    return (
+                      <div key={i}>
+                        {(() => {
+                          switch (data.type) {
+                            case "radio":
+                              return (
                                 <div>
-                                  <div className="mb-3">
-                                    <input
-                                      className="form-control"
-                                      label={data.label}
-                                      disabled={true}
-                                      value={formValues[data.name]}
-                                      type={data.type}
-                                      name={data.name}
-                                      placeholder={data.placeholder}
-                                    />
-                                    <p style={{ color: "red" }}></p>
+                                  {data.value.map((ele, i) => {
+                                    return (
+                                      <div
+                                        className="my-3"
+                                        style={{ display: "flex" }}
+                                        key={i}
+                                      >
+                                        <input
+                                          className="form-check-input mx-3"
+                                          type="radio"
+                                          name={data.name}
+                                          disabled={true}
+                                          value={
+                                            typeof ele === "string"
+                                              ? ele
+                                              : formValues[ele.name]
+                                          }
+                                          checked={
+                                            formValues[ele.name] &&
+                                            formValues[ele.name] ===
+                                              formValues.answer
+                                          }
+                                        />
+                                        {data.name !== "answer" ? (
+                                          <p style={{ color: "red" }}></p>
+                                        ) : null}
+                                        {typeof ele === "string" ? (
+                                          <label>{ele}</label>
+                                        ) : (
+                                          <>
+                                            <div className="mb-3 ">
+                                              <input
+                                                className="form-control"
+                                                type={ele.type}
+                                                disabled={true}
+                                                name={ele.name}
+                                                value={
+                                                  formValues[ele.name] || ""
+                                                }
+                                                placeholder={ele.placeholder}
+                                              />
+                                            </div>
+                                          </>
+                                        )}
+                                      </div>
+                                    );
+                                  })}
+                                </div>
+                              );
+                            default:
+                              return (
+                                <div>
+                                  <div>
+                                    <div className="mb-3">
+                                      <input
+                                        className="form-control"
+                                        label={data.label}
+                                        disabled={true}
+                                        value={formValues[data.name]}
+                                        type={data.type}
+                                        name={data.name}
+                                        placeholder={data.placeholder}
+                                      />
+                                      <p style={{ color: "red" }}></p>
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                            );
-                        }
-                      })()}
-                    </div>
-                  );
-                })}
-                <DemoButton
-                  onClick={btnClickPrevious}
-                  disabled={index > 1 ? false : true}
-                  type={"button"}
-                >
-                  Previous
-                </DemoButton>
-                <DemoButton
-                  disabled={index < data.questions.length > 0 ? false : true}
-                  onClick={btnClickNext}
-                  type={"button"}
-                >
-                  Next
-                </DemoButton>
-              </form>
+                              );
+                          }
+                        })()}
+                      </div>
+                    );
+                  })}
+                  <DemoButton
+                    onClick={btnClickPrevious}
+                    disabled={index > 1 ? false : true}
+                    type={"button"}
+                  >
+                    Previous
+                  </DemoButton>
+                  <DemoButton
+                    disabled={index < data.questions.length > 0 ? false : true}
+                    onClick={btnClickNext}
+                    type={"button"}
+                  >
+                    Next
+                  </DemoButton>
+                </form>
+                <PageNumber
+                  TotalPageNumber={TotalQuestion}
+                  CurrentPageNumber={index}
+                ></PageNumber>
+              </>
             )}
-            <PageNumber
-              TotalPageNumber={TotalQuestion}
-              CurrentPageNumber={index}
-            ></PageNumber>
           </div>
         </div>
       </div>

@@ -42,10 +42,16 @@ const EditExam = () => {
     dispatch(ExamDetailRequest(id));
     isTeacher(naviget);
 
+    setTimeout(() => {
+      if (data.questions) {
+        editValue(index - 1);
+        console.log("exasmDetail is calingc dfgdghdfgdfgdfgdfgdfgdfgdf");
+      }
+    }, 2000);
+
     createExamFields.map((data) =>
       setFormValues((prv) => ({ ...prv, [data.name]: "" }))
     );
-
     dispatch(createExaminitialstate());
   }, []);
 
@@ -141,11 +147,10 @@ const EditExam = () => {
 
   formValues.subjectName = data.subjectName;
 
+  console.log("formValues", formValues);
+  console.log("cloneData", cloneData);
   console.log("data", data);
-  // console.log("formValues :>> ", formValues);
-  // console.log("index :>> ", index);
-  // console.log("exasmDetail :>> ", exasmDetail?.questions);
-  // console.log("cloneData :>> ", cloneData);
+
   return (
     <div>
       <div className="container my-3">
@@ -275,10 +280,7 @@ const EditExam = () => {
               >
                 Next
               </DemoButton>
-              <DemoButton type={"submit"}>
-                Update
-                {/* {data.questions.length === 14 ? "Done" : "Submit"} */}
-              </DemoButton>
+              <DemoButton type={"submit"}>Update</DemoButton>
             </form>
           )}
         </div>

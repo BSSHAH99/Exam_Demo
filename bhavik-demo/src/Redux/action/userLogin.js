@@ -20,6 +20,7 @@ export const loginRequest = (navigate) => {
     await axios
       .post(`${process.env.REACT_APP_API_DOMAIN}/users/Login`, userData)
       .then((res) => {
+        dispatch(loginSuccess(res.data));
         if (res.data.statusCode === 200) {
           localStorage.setItem("access-token", res.data.data.token);
           localStorage.setItem("name", res.data.data.name);
@@ -30,11 +31,11 @@ export const loginRequest = (navigate) => {
             navigate("/teacher-deshbord");
           }
         } else {
-          dispatch(loginFailure(res.data.message));
+          dispatch(loginFailure(res.data));
         }
         dispatch(loginClear(res.data));
       })
-      .catch((error) => dispatch(loginFailure(error.message)));
+      .catch((error) => dispatch(loginFailure(error)));
   };
 };
 

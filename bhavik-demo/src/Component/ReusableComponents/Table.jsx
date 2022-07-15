@@ -59,21 +59,21 @@ const Table = ({ tableheadings, tableData, Detail, DetailName, Edit, EditName, D
                                             {Detail &&
                                                 <React.Fragment>
                                                     <td>
-                                                        <DemoButton onClick={(e) => Detail(e, index, data)}> {DetailName}</DemoButton>
+                                                        <DemoButton onClick={(e) => Detail(e, index, data._id, data)}> {DetailName}</DemoButton>
                                                     </td>
                                                 </React.Fragment>
                                             }
                                             {Result &&
                                                 <React.Fragment>
                                                     <td>
-                                                        <DemoButton onClick={(e) => Result(e, index, data._id)} disabled={data.Result.length > 0 ? false : true}> {ResultName}</DemoButton>
+                                                        <DemoButton onClick={(e) => Result(e, index, data._id, data)} disabled={data.Result.length > 0 ? false : true}> {ResultName}</DemoButton>
                                                     </td>
                                                 </React.Fragment>
                                             }
                                             {Edit &&
                                                 <React.Fragment>
                                                     <td>
-                                                        <DemoButton onClick={(e) => Edit(e, index, data._id)} > {EditName}</DemoButton>
+                                                        <DemoButton onClick={(e) => Edit(e, index, data._id, data)} > {EditName}</DemoButton>
                                                     </td>
                                                 </React.Fragment>
                                             }
