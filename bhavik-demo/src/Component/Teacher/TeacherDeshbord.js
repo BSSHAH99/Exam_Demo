@@ -6,8 +6,10 @@ import { fetchStudentRequest } from "../../Redux/action/getStudent";
 import { isTeacher } from "../function";
 import Table from "../ReusableComponents/Table";
 import Loading from "../ReusableComponents/Loading";
+import { useState } from "react";
 
 const TeacherDeshbord = () => {
+  const [state, setState] = useState();
   const navigate = useNavigate();
 
   const myState = useSelector((state) => state.getStudentReducer);
@@ -20,8 +22,9 @@ const TeacherDeshbord = () => {
   useEffect(() => {
     isTeacher(navigate);
     dispatch(fetchStudentRequest());
-  }, []);
+  }, [state]);
 
+  console.log("composnest render :>> ");
   return (
     <>
       <div className="container my-3">

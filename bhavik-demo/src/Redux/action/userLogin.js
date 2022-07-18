@@ -20,7 +20,8 @@ export const loginRequest = (navigate) => {
     await axios
       .post(`${process.env.REACT_APP_API_DOMAIN}/users/Login`, userData)
       .then((res) => {
-        dispatch(loginSuccess(res.data));
+        dispatch(loginSuccess(res.data.statusCode, res.data.message));
+        console.log("res.datas :>> ", res.data);
         if (res.data.statusCode === 200) {
           localStorage.setItem("access-token", res.data.data.token);
           localStorage.setItem("name", res.data.data.name);
@@ -33,9 +34,14 @@ export const loginRequest = (navigate) => {
         } else {
           dispatch(loginFailure(res.data));
         }
-        dispatch(loginClear(res.data));
+        setTimeout(() => {
+          dispatch(loginClear(res.data));
+        }, 10000);
       })
-      .catch((error) => dispatch(loginFailure(error)));
+      .catch((error) => {
+        console.log("error :>> ", error);
+        dispatch(loginFailure(error));
+      });
   };
 };
 
@@ -63,10 +69,11 @@ export const isValidLoginFailure = (validat) => {
     payload: validat,
   };
 };
-export const loginSuccess = ({ data }) => {
+export const loginSuccess = (statusCode, message) => {
+  console.log("data :>> ", message, statusCode);
   return {
     type: ActionType.LOGIN_SUCCESS,
-    payload: data,
+    payload: { statusCode: statusCode, message: message },
   };
 };
 export const loginFailure = (error) => {

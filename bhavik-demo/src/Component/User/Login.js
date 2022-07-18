@@ -42,6 +42,9 @@ const Login = () => {
       return;
     }
     dispatch(loginRequest(navigate));
+    // myState.message.length > 0 && myState.message.statusCode === 200
+    //   ? toast.success(myState.message.message)
+    //   : toast.warn(myState.message.message);
   };
 
   const handleChange = (e) => {
@@ -60,9 +63,11 @@ const Login = () => {
 
       <div className="container my-3">
         <div className="container">
-          {!myState.message ? null : (
-            <Alert className={"alert alert-danger"}>{myState.message}</Alert>
-          )}
+          {
+            // myState.message.length > 0 && myState.message.statusCode === 200
+            //   ? toast.success(myState.message.message)
+            //   : toast.success(myState.message.message)
+          }
           <ToastContainer></ToastContainer>
           <form onSubmit={handalSubmit}>
             {LoginFields.map((input, index) => {

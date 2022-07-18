@@ -8,8 +8,7 @@ loginFields.forEach((element) => {
 
 const initialstate = {
   user: { ...user },
-  data: {},
-  // message: {},
+  message: {},
   formerror: {},
   // isSubmit: false,
 };
@@ -27,13 +26,13 @@ const userLoginReducer = (state = initialstate, action) => {
     //   return { ...state, formerror: { ...state.formerror, ...action.payload } };
 
     case ActionType.LOGIN_SUCCESS:
-      return { ...state, data: action.payload };
+      return { ...state, message: { ...state.message, ...action.payload } };
 
     case ActionType.LOGIN_FAILURE:
       return { ...state, data: action.payload };
 
     case ActionType.LOGIN_CLEAR:
-      return { ...state, user: { ...user } };
+      return initialstate;
 
     default:
       return state;
