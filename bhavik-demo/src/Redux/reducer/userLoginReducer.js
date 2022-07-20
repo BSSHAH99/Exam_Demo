@@ -10,7 +10,6 @@ const initialstate = {
   user: { ...user },
   message: {},
   formerror: {},
-  // isSubmit: false,
 };
 
 const userLoginReducer = (state = initialstate, action) => {
@@ -20,7 +19,6 @@ const userLoginReducer = (state = initialstate, action) => {
 
     case ActionType.IS_LOGIN_ERROR:
       return { ...state, formerror: { ...state.formerror, ...action.payload } };
-    // return { ...state, formerror: action.payload };
 
     // case ActionType.IS_VALID_LOGIN:
     //   return { ...state, formerror: { ...state.formerror, ...action.payload } };
@@ -29,7 +27,7 @@ const userLoginReducer = (state = initialstate, action) => {
       return { ...state, message: { ...state.message, ...action.payload } };
 
     case ActionType.LOGIN_FAILURE:
-      return { ...state, data: action.payload };
+      return { ...state, message: { ...state.message, ...action.payload } };
 
     case ActionType.LOGIN_CLEAR:
       return initialstate;

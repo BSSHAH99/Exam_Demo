@@ -9,7 +9,7 @@ ResetPasswordFields.forEach((element) => {
 const initialstate = {
   user: { ...user },
   formerror: {},
-  message: "",
+  message: {},
 };
 
 const resetPasswordReducer = (state = initialstate, action) => {
@@ -21,13 +21,13 @@ const resetPasswordReducer = (state = initialstate, action) => {
       return { ...state, formerror: { ...state.formerror, ...action.payload } };
 
     case ActionType.RESET_PASSWORD_SUCCESS:
-      return { ...state, message: action.payload };
+      return { ...state, message: { ...state.message, ...action.payload } };
 
     case ActionType.RESET_PASSWORD_FAILURE:
-      return { ...state, message: action.payload };
+      return { ...state, message: { ...state.message, ...action.payload } };
 
     case ActionType.RESET_PASSWORD_CLEAR:
-      return { ...state, user: { ...user } };
+      return initialstate;
 
     default:
       return state;

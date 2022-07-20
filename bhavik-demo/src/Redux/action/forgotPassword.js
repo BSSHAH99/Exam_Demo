@@ -1,4 +1,4 @@
-import axios from "axios";
+import Api from "../../Services/apiInstance";
 import validation from "../../Component/validation";
 import { ActionType } from "./action-type";
 
@@ -20,18 +20,23 @@ export const forgotPasswordRequest = (navigate) => {
     const state = getState();
     const userData = state.forgotPasswordReducer.user;
     console.log("this is userData", userData);
-    await axios
-      .post(
-        `${process.env.REACT_APP_API_DOMAIN}/users/ForgotPassword`,
-        userData
-      )
+    await Api.post("/users/ForgotPassword", userData)
       .then((res) => {
-        dispatch(forgotPasswordSuccess(res.data.message));
-        // setTimeout(console.log("hii bhavik shah"), 5000);
-        // setTimeout(myGreeting, 5000);
-        dispatch(forgotPasswordClear(res.data));
+        if (res.data.statusCode === 200) {
+          navigate("/login");
+        }
+        dispatch(forgotPasswordSuccess(res.data.statusCode, res.data.message));
+        setTimeout(() => {
+          dispatch(forgotPasswordClear());
+        }, 5000);
       })
-      .catch((error) => dispatch(forgotPasswordFailure(error.message)));
+      .catch((error) => {
+        dispatch(forgotPasswordFailure(error));
+
+        setTimeout(() => {
+          dispatch(forgotPasswordClear());
+        }, 5000);
+      });
   };
 };
 export const isForgotPasswordError = (validat) => {
@@ -40,10 +45,10 @@ export const isForgotPasswordError = (validat) => {
     payload: validat,
   };
 };
-export const forgotPasswordSuccess = (message) => {
+export const forgotPasswordSuccess = (statusCode, message) => {
   return {
     type: ActionType.FORGOT_PASSWORD_SUCCESS,
-    payload: message,
+    payload: { statusCode: statusCode, message: message },
   };
 };
 export const forgotPasswordFailure = (error) => {
@@ -53,9 +58,8 @@ export const forgotPasswordFailure = (error) => {
   };
 };
 
-export const forgotPasswordClear = (data) => {
+export const forgotPasswordClear = () => {
   return {
     type: ActionType.FORGOT_PASSWORD_CLEAR,
-    payload: data,
   };
 };

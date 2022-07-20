@@ -41,10 +41,13 @@ const AllExamStudent = () => {
         <Modal.Body>
           {data
             ? Object.entries(data).map(([key, values]) => {
+                console.log("data :>> ", data);
                 if (
-                  typeof values === "object" &&
-                  Array.isArray(values) &&
-                  key === "Result"
+                  (typeof values === "object" &&
+                    Array.isArray(values) &&
+                    key === "Result") ||
+                  key === "_id" ||
+                  key === "resultStatus"
                 ) {
                   console.log("values", values);
                 } else {

@@ -15,6 +15,7 @@ import { useState } from "react";
 import validation from "../validation";
 import { editExamData } from "../../Redux/action/editExam";
 import { ExamDetailRequest } from "../../Redux/action/viewExamDetail";
+import { toast } from "react-toastify";
 
 const initialData = {
   subjectName: "",
@@ -36,8 +37,9 @@ const CreateExam = () => {
   // const [active, setActive] = useState(false);
 
   const myState = useSelector((state) => state.createExamReducer);
+  const message = myState.message;
   const naviget = useNavigate();
-
+  console.log("myState :>> ", myState);
   const viewExam = useSelector((state) => state.viewExamReducer.exam);
   const exasmDetailState = useSelector((state) => state.examDetailReducer);
 
@@ -47,8 +49,6 @@ const CreateExam = () => {
 
   useEffect(() => {
     isTeacher(naviget);
-    // console.log("exasmDetail :>> ", exasmDetail);
-
     if (id) {
       setTimeout(() => {
         if (data.questions) {
@@ -57,13 +57,10 @@ const CreateExam = () => {
         }
       }, 2000);
     }
-
-    // console.log("data this is 51 liens :>> ", data);
-    // setActive(true);
     createExamFields.map((data) =>
       setFormValues((prv) => ({ ...prv, [data.name]: "" }))
     );
-    dispatch(createExaminitialstate());
+    // dispatch(createExaminitialstate());
   }, []);
   useEffect(() => {
     if (Object.keys(cloneData || {})?.length) {
@@ -190,10 +187,15 @@ const CreateExam = () => {
 
   // console.log("data", data);
   console.log("formValues", formValues);
-  console.log("location", location.state);
+  // console.log("location", location.state);
 
   return (
     <div>
+      {Object.keys(message).length === 0
+        ? null
+        : message.statusCode === 200
+        ? toast.success(message.message)
+        : toast.error(message.message)}
       <div className="container my-3">
         <div className="container">
           {!data.questions ? (

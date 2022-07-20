@@ -7,7 +7,7 @@ SignupFields.forEach((element) => {
 });
 const initialstate = {
   user: { ...user },
-  message: "",
+  message: {},
   formerror: {},
 };
 
@@ -20,13 +20,13 @@ const userSignupReducer = (state = initialstate, action) => {
       return { ...state, formerror: { ...state.formerror, ...action.payload } };
 
     case ActionType.SIGN_UP_SUCCESS:
-      return { ...state, message: action.payload };
+      return { ...state, message: { ...state.message, ...action.payload } };
 
     case ActionType.SIGN_UP_FAILURE:
-      return { ...state, message: action.payload };
+      return { ...state, message: { ...state.message, ...action.payload } };
 
     case ActionType.SIGN_UP_CLEAR:
-      return { ...state, user: { ...user } };
+      return initialstate;
 
     default:
       return state;

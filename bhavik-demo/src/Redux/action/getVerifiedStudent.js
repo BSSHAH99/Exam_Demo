@@ -5,6 +5,7 @@ export const fetchVerifiedStudentRequest = () => {
   return async (dispatch) => {
     await Api.get("/dashboard/Teachers/StudentForExam")
       .then((res) => {
+        console.log("res.data.data :>> ", res.data.data);
         dispatch(fetchVerifiedStudentSuccess(res.data.data));
       })
       .catch((error) => dispatch(fetchVerifiedStudentFailure(error.message)));

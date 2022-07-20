@@ -15,9 +15,11 @@ import OneLink from "../ReusableComponents/OneLink";
 import { isLogin } from "../function";
 import { useNavigate } from "react-router-dom";
 import validation from "../validation";
+import { toast } from "react-toastify";
 
 const SignUp = () => {
   const myState = useSelector((state) => state.userSignupReducer);
+  const message = myState.message;
   const userData = myState.user;
   const formerror = myState.formerror;
 
@@ -64,23 +66,11 @@ const SignUp = () => {
 
       <div className="container my-3">
         <div className="container">
-          {!myState.message ? null : (
-            <Alert className={"alert alert-danger"}>{myState.message}</Alert>
-          )}
-
-          {/* <form onSubmit={handalSubmit}>
-            {signupFields.map((input, index) => {
-              return (
-                <DemoInput
-                  key={index}
-                  {...input}
-                  value={userData[input.name] || ""}
-                  onChange={handleChange}
-                />
-              );
-            })}
-            <DemoButton type={"submit"}>Login</DemoButton>
-          </form> */}
+          {Object.keys(message).length === 0
+            ? null
+            : message.statusCode === 200
+            ? toast.success(message.message)
+            : toast.error(message.message)}
           <form onSubmit={handalSubmit}>
             {signupFields.map((input, index) => {
               switch (input.type) {

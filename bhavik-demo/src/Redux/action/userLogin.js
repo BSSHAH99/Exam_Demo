@@ -1,6 +1,6 @@
-import axios from "axios";
 import validation from "../../Component/validation";
 import { ActionType } from "./action-type";
+import Api from "../../Services/apiInstance";
 
 export const loginOnChange = (key, value) => (dispatch, getState) => {
   const state = getState();
@@ -17,8 +17,8 @@ export const loginRequest = (navigate) => {
   return async (dispatch, getState) => {
     const state = getState();
     const userData = state.userLoginReducer.user;
-    await axios
-      .post(`${process.env.REACT_APP_API_DOMAIN}/users/Login`, userData)
+    await Api.post("/users/Login", userData)
+
       .then((res) => {
         dispatch(loginSuccess(res.data.statusCode, res.data.message));
         console.log("res.datas :>> ", res.data);
@@ -32,15 +32,18 @@ export const loginRequest = (navigate) => {
             navigate("/teacher-deshbord");
           }
         } else {
-          dispatch(loginFailure(res.data));
+          loginSuccess(res.data.statusCode, res.data.message);
         }
         setTimeout(() => {
-          dispatch(loginClear(res.data));
-        }, 10000);
+          dispatch(loginClear());
+        }, 5000);
       })
       .catch((error) => {
         console.log("error :>> ", error);
         dispatch(loginFailure(error));
+        setTimeout(() => {
+          dispatch(loginClear());
+        }, 5000);
       });
   };
 };
@@ -82,9 +85,8 @@ export const loginFailure = (error) => {
     payload: error,
   };
 };
-export const loginClear = (data) => {
+export const loginClear = () => {
   return {
     type: ActionType.LOGIN_CLEAR,
-    payload: data,
   };
 };

@@ -4,7 +4,8 @@ import { BrowserRouter } from "react-router-dom";
 
 import RoutesNavbar from "./Routes/RoutesNavbar";
 import Navbar from "./Routes/Navbar";
-import axios from "axios";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
       <BrowserRouter>
         <Navbar />
         <RoutesNavbar />
+        <ToastContainer></ToastContainer>
       </BrowserRouter>
     </div>
   );

@@ -5,6 +5,7 @@ export const fetchStudentDetailRequest = (id) => {
   return async (dispatch) => {
     await Api.get("/dashboard/Teachers/viewStudentDetail?id=" + id)
       .then((res) => {
+        console.log("res.data.data :>> ", res.data.data);
         dispatch(fetchStudentDetailSuccess(res.data.data));
       })
       .catch((error) => dispatch(fetchStudentDetailFailure(error.message)));

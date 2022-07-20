@@ -31,10 +31,17 @@ export const resetPasswordRequest = () => {
     const userData = state.resetPasswordReducer.user;
     await Api.post("/users/ResetPassword", userData)
       .then((res) => {
-        dispatch(resetPasswordSuccess(res.data.message));
-        dispatch(resetPasswordClear(res.data));
+        dispatch(resetPasswordSuccess(res.data.statusCode, res.data.message));
+        setTimeout(() => {
+          dispatch(resetPasswordClear());
+        }, 5000);
       })
-      .catch((error) => dispatch(resetPasswordFailure(error.message)));
+      .catch((error) => {
+        dispatch(resetPasswordFailure(error));
+        setTimeout(() => {
+          dispatch(resetPasswordClear());
+        }, 5000);
+      });
   };
 };
 
@@ -44,10 +51,10 @@ export const isResetPasswordError = (message) => {
     payload: message,
   };
 };
-export const resetPasswordSuccess = (message) => {
+export const resetPasswordSuccess = (statusCode, message) => {
   return {
     type: ActionType.RESET_PASSWORD_SUCCESS,
-    payload: message,
+    payload: { statusCode: statusCode, message: message },
   };
 };
 export const resetPasswordFailure = (error) => {
@@ -57,9 +64,8 @@ export const resetPasswordFailure = (error) => {
   };
 };
 
-export const resetPasswordClear = (data) => {
+export const resetPasswordClear = () => {
   return {
     type: ActionType.RESET_PASSWORD_CLEAR,
-    payload: data,
   };
 };

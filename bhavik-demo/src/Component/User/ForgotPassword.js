@@ -13,8 +13,8 @@ import Alert from "../ReusableComponents/Alert";
 import DemoButton from "../ReusableComponents/DemoButton";
 import DemoInput from "../ReusableComponents/DemoInput";
 import OneLink from "../ReusableComponents/OneLink";
-import Toasts from "../ReusableComponents/Toasts";
 import validation from "../validation";
+import { toast } from "react-toastify";
 
 const ForgotPassword = () => {
   const dispatch = useDispatch();
@@ -25,6 +25,7 @@ const ForgotPassword = () => {
   }, []);
 
   const myState = useSelector((state) => state.forgotPasswordReducer);
+  const message = myState.message;
   const userData = myState.user;
   const formerror = myState.formerror;
 
@@ -59,9 +60,11 @@ const ForgotPassword = () => {
 
       <div className="container my-3">
         <div className="container">
-          {!myState.message ? null : (
-            <Alert className={"alert alert-danger"}>{myState.message}</Alert>
-          )}
+          {Object.keys(message).length === 0
+            ? null
+            : message.statusCode === 200
+            ? toast.success(message.message)
+            : toast.error(message.message)}
           <form onSubmit={handalSubmit}>
             {forgotPasswordFields.map((input, index) => {
               return (

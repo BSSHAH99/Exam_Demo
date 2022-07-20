@@ -4,7 +4,7 @@ const initialstate = {
   formValues: {},
   examData: {},
   formerror: {},
-  message: "",
+  message: {},
 };
 
 const createExamReducer = (state = initialstate, action) => {
@@ -22,13 +22,13 @@ const createExamReducer = (state = initialstate, action) => {
       return { ...state, formerror: { ...state.formerror, ...action.payload } };
 
     case ActionType.CREATE_EXAM_SUCCESS:
-      return { ...state, message: action.payload };
+      return { ...state, message: { ...state.message, ...action.payload } };
 
     case ActionType.CREATE_EXAM_FAILURE:
-      return { ...state, message: action.payload };
+      return { ...state, message: { ...state.message, ...action.payload } };
 
     case ActionType.CREATE_EXAM_CLEAR:
-      return { ...state, examData: {} };
+      return initialstate;
 
     default:
       return state;

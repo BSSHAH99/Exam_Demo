@@ -3,25 +3,6 @@ import Api from "../../Services/apiInstance";
 
 import { ActionType } from "./action-type";
 
-// export const createExamOnChange = (key, value) => (dispatch, getState) => {
-//   const state = getState();
-//   const { examData } = state.createExamReducer;
-
-//   const newError = validation(key, value);
-//   dispatch(createExamError({ [key]: newError }));
-
-//   const userData = { examData, [key]: value };
-//   console.log("userData :>> ", userData);
-//   dispatch({ type: ActionType.CREATE_EXAM_ON_CHANGE, payload: userData });
-// };
-
-// export const createExamData = (data) => {
-//   return {
-//     type: ActionType.CREATE_EXAM_DATA,
-//     payload: data,
-//   };
-// };
-
 export const createExaminitialstate = () => {
   return {
     type: ActionType.CREATE_EXAM_INITIAL,
@@ -31,19 +12,27 @@ export const createExaminitialstate = () => {
 export const createExamRequest = (initialData, navigate) => {
   console.log("sigsignUpRequest is calling");
   return async (dispatch) => {
-    await Api.post("/dashboard/Teachers/Exam", initialData)
+    await Api.post("dashboard/Teachers/Exam", initialData)
       .then((res) => {
-        dispatch(createExamSuccess(res.data.message));
+        dispatch(createExamSuccess(res.data.statusCode, res.data.message));
         navigate("/view-exam");
+        setTimeout(() => {
+          dispatch(createExamClear());
+        }, 5000);
       })
-      .catch((error) => dispatch(createExamFailure(error.message)));
+      .catch((error) => {
+        dispatch(createExamFailure(error.message));
+        setTimeout(() => {
+          dispatch(createExamClear());
+        }, 5000);
+      });
   };
 };
 
-export const createExamSuccess = (data) => {
+export const createExamSuccess = (statusCode, message) => {
   return {
     type: ActionType.CREATE_EXAM_SUCCESS,
-    payload: data,
+    payload: { statusCode: statusCode, message: message },
   };
 };
 
@@ -54,16 +43,15 @@ export const createExamError = (validat) => {
   };
 };
 
-export const createExamFailure = (error) => {
+export const createExamFailure = (message) => {
   return {
     type: ActionType.CREATE_EXAM_FAILURE,
-    payload: error,
+    payload: { message: message },
   };
 };
 
-export const createExamClear = (data) => {
+export const createExamClear = () => {
   return {
-    type: ActionType.SIGN_UP_CLEAR,
-    payload: data,
+    type: ActionType.CREATE_EXAM_CLEAR,
   };
 };

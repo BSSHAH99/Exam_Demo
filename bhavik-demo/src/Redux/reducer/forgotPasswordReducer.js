@@ -9,7 +9,7 @@ ForgotPasswordFields.forEach((element) => {
 const initialstate = {
   user: { ...user },
   formerror: {},
-  message: "",
+  message: {},
 };
 
 const forgotPasswordReducer = (state = initialstate, action) => {
@@ -21,13 +21,13 @@ const forgotPasswordReducer = (state = initialstate, action) => {
       return { ...state, formerror: { ...state.formerror, ...action.payload } };
 
     case ActionType.FORGOT_PASSWORD_SUCCESS:
-      return { ...state, message: action.payload };
+      return { ...state, message: { ...state.message, ...action.payload } };
 
     case ActionType.FORGOT_PASSWORD_FAILURE:
-      return { ...state, message: action.payload };
+      return { ...state, message: { ...state.message, ...action.payload } };
 
     case ActionType.FORGOT_PASSWORD_CLEAR:
-      return { ...state, user: { ...user } };
+      return initialstate;
 
     default:
       return state;
