@@ -14,6 +14,7 @@ import allExamStudentReducer from "../reducer/allExamStudentReducer";
 import studentProfileReducer from "../reducer/studentProfileReducer";
 import editStudentProfileReducer from "../reducer/editStudentProfileReducer";
 import examPaperReducer from "../reducer/examPaperReducer";
+import toastReducer from "../reducer/toastReducer";
 
 const rootReducer = combineReducers({
   userSignupReducer: userSignupReducer,
@@ -31,6 +32,7 @@ const rootReducer = combineReducers({
   studentProfileReducer: studentProfileReducer,
   editStudentProfileReducer: editStudentProfileReducer,
   examPaperReducer: examPaperReducer,
+  toastReducer: toastReducer,
 });
 
 export default rootReducer;

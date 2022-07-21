@@ -1,6 +1,7 @@
 import Api from "../../Services/apiInstance";
 import validation from "../../Component/validation";
 import { ActionType } from "./action-type";
+import { toastSuccess, toastFailure } from "../action/toastAction";
 
 export const signUpOnChange = (key, value) => (dispatch, getState) => {
   const state = getState();
@@ -25,17 +26,13 @@ export const signUpRequest = (navigate) => {
         if (res.data.statusCode === 200) {
           navigate("/login");
         }
-        dispatch(signUpSuccess(res.data.statusCode, res.data.message));
-        setTimeout(() => {
-          dispatch(signUpClear());
-        }, 5000);
+        dispatch(toastSuccess(res.data.statusCode, res.data.message));
+        dispatch(signUpClear());
       })
       .catch((error) => {
         console.log("error :>> ", error);
-        dispatch(signUpFailure(error));
-        setTimeout(() => {
-          dispatch(signUpClear());
-        }, 5000);
+        dispatch(toastFailure(error));
+        dispatch(signUpClear());
       });
   };
 };

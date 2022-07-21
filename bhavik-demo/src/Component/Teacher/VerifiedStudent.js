@@ -16,8 +16,7 @@ const VerifiedStudent = () => {
   let tableheadings = ["name", "email", "status"];
   const dispatch = useDispatch();
   useEffect(() => {
-    isTeacher(navigate);
-    // dispatch()
+    isTeacher();
     dispatch(fetchVerifiedStudentRequest());
   }, []);
 

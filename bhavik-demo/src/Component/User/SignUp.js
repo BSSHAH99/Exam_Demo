@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Helmet } from "react-helmet";
+
 import DemoInput from "../ReusableComponents/DemoInput";
 import DemoRadioInput from "../ReusableComponents/DemoRadioInput";
 import DemoButton from "../ReusableComponents/DemoButton";
@@ -32,10 +32,6 @@ const SignUp = () => {
   const dispatch = useDispatch();
 
   const handalSubmit = (e) => {
-    // console.log("handal submit is calling");
-    // e.preventDefault();
-    // dispatch(signUpRequest());
-
     let error = {};
     e.preventDefault();
     Object.entries(userData).forEach(([key, value]) => {
@@ -50,27 +46,13 @@ const SignUp = () => {
   };
 
   const handleChange = (e) => {
-    // console.log("e.target.value :>> ", e.target.value);
     dispatch(signUpOnChange(e.target.name, e.target.value));
   };
 
   return (
     <React.Fragment>
-      <div>
-        <Helmet>
-          <title>SignUp</title>
-          <meta name="from" content="Registration from" />
-          <meta name="keywords" content="Registration" />
-        </Helmet>
-      </div>
-
       <div className="container my-3">
         <div className="container">
-          {Object.keys(message).length === 0
-            ? null
-            : message.statusCode === 200
-            ? toast.success(message.message)
-            : toast.error(message.message)}
           <form onSubmit={handalSubmit}>
             {signupFields.map((input, index) => {
               switch (input.type) {

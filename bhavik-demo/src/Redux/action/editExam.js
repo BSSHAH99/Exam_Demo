@@ -1,5 +1,6 @@
 import { ActionType } from "./action-type";
 import Api from "../../Services/apiInstance";
+import { toastSuccess, toastFailure } from "../action/toastAction";
 
 export const editExamData = (id, data, naviget) => {
   return async (dispatch) => {
@@ -7,18 +8,13 @@ export const editExamData = (id, data, naviget) => {
       .then((res) => {
         // dispatch(editExamSuccess(res.data.data)),
         console.log("res.data :>> ", res.data);
-        dispatch(editExamSuccess(res.data.statusCode, res.data.message));
+        dispatch(toastSuccess(res.data.statusCode, res.data.message));
         naviget("/view-exam");
-        setTimeout(() => {
-          dispatch(editExamClear());
-        }, 5000);
+        dispatch(editExamClear());
       })
       .catch((error) => {
-        dispatch(editExamFailure(error.message));
-        console.log("error.message", error.message);
-        setTimeout(() => {
-          dispatch(editExamClear());
-        }, 5000);
+        dispatch(toastFailure(error));
+        dispatch(editExamClear());
       });
   };
 };

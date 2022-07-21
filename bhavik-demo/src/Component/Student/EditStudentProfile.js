@@ -25,7 +25,7 @@ const EditStudentProfile = () => {
   const student = studentProfileState.student;
 
   useEffect(() => {
-    isStudent(navigate);
+    isStudent();
   }, []);
 
   let myState = useSelector((state) => state.editStudentProfileReducer);

@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { Helmet } from "react-helmet";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import resetPasswordFields from "../../Constants/ResetPasswordFields";
@@ -12,7 +11,6 @@ import Alert from "../ReusableComponents/Alert";
 import DemoButton from "../ReusableComponents/DemoButton";
 import DemoInput from "../ReusableComponents/DemoInput";
 import validation from "../validation";
-import { toast } from "react-toastify";
 
 const ResetPassword = () => {
   const dispatch = useDispatch();
@@ -24,8 +22,6 @@ const ResetPassword = () => {
   const myState = state.resetPasswordReducer;
   const userData = myState.user;
   const message = myState.message;
-  // const Password = userData.Password;
-  // const ConfirmPassword = userData.ConfirmPassword;
   const formerror = myState.formerror;
 
   const handalSubmit = (e) => {
@@ -50,21 +46,8 @@ const ResetPassword = () => {
 
   return (
     <>
-      <div>
-        <Helmet>
-          <title>ResetPassword</title>
-          <meta name="from" content="Reset Password" />
-          <meta name="keywords" content="Reset Password" />
-        </Helmet>
-      </div>
-
       <div className="container my-3">
         <div className="container">
-          {Object.keys(message).length === 0
-            ? null
-            : message.statusCode === 200
-            ? toast.success(message.message)
-            : toast.error(message.message)}
           <form onSubmit={handalSubmit}>
             {resetPasswordFields.map((input, index) => {
               return (

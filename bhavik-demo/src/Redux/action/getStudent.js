@@ -16,15 +16,6 @@ export const fetchStudentRequest = () => {
   };
 };
 
-// export const featchUseres = () => {
-//   return async (dispatch) => {
-//     await axios
-//       .get("https://jsonplaceholder.typicode.com/users")
-//       .then((res) => dispatch(fetchUsersSuccess(res.data)))
-//       .catch((error) => dispatch(fetchUsersFailure(error.message)));
-//   };
-// };
-
 export const fetchStudentSuccess = (users) => {
   return {
     type: ActionType.FETCH_STUDENT_SUCCESS,

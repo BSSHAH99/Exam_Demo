@@ -2,19 +2,11 @@ import axios from "axios";
 import validation from "../../Component/validation";
 import Api from "../../Services/apiInstance";
 import { ActionType } from "./action-type";
+import { toastSuccess, toastFailure } from "../action/toastAction";
 
 export const resetPassword = {};
 
 export const resetPasswordOnChange = (key, value) => (dispatch, getState) => {
-  // if (key === "Password") {
-  //   const Password = { [key]: value };
-  //   Object.assign(resetPassword, Password);
-  // }
-
-  // if (key === "ConfirmPassword") {
-  //   const ConfirmPassword = { [key]: value };
-  //   Object.assign(resetPassword, ConfirmPassword);
-  // }
   const state = getState();
   const { user } = state.resetPasswordReducer;
   const userData = state.resetPasswordReducer.user;
@@ -31,16 +23,12 @@ export const resetPasswordRequest = () => {
     const userData = state.resetPasswordReducer.user;
     await Api.post("/users/ResetPassword", userData)
       .then((res) => {
-        dispatch(resetPasswordSuccess(res.data.statusCode, res.data.message));
-        setTimeout(() => {
-          dispatch(resetPasswordClear());
-        }, 5000);
+        dispatch(toastSuccess(res.data.statusCode, res.data.message));
+        dispatch(resetPasswordClear());
       })
       .catch((error) => {
-        dispatch(resetPasswordFailure(error));
-        setTimeout(() => {
-          dispatch(resetPasswordClear());
-        }, 5000);
+        dispatch(toastFailure(error));
+        dispatch(resetPasswordClear());
       });
   };
 };

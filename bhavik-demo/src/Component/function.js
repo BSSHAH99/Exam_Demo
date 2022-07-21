@@ -1,9 +1,8 @@
-import { Button, Modal } from "react-bootstrap";
 export function isLogin(navigate) {
   localStorage.getItem("access-token") &&
     localStorage.getItem("name") &&
     localStorage.getItem("role") &&
-    navigate(-1);
+    navigate("/");
 }
 export function isLoginCheck() {
   if (
@@ -15,15 +14,15 @@ export function isLoginCheck() {
   }
 }
 
-export function isStudent(navigate) {
+export function isStudent() {
   if (localStorage.getItem("role") === "teacher") {
-    navigate(-1);
+    localStorage.clear();
   }
 }
 
-export function isTeacher(navigate) {
+export function isTeacher() {
   if (localStorage.getItem("role") === "student") {
-    navigate(-1);
+    localStorage.clear();
   }
 }
 

@@ -1,6 +1,7 @@
 import Api from "../../Services/apiInstance";
 import validation from "../../Component/validation";
 import { ActionType } from "./action-type";
+import { toastSuccess, toastFailure } from "../action/toastAction";
 
 export const forgotPasswordOnChange = (key, value) => (dispatch, getState) => {
   const state = getState();
@@ -13,8 +14,6 @@ export const forgotPasswordOnChange = (key, value) => (dispatch, getState) => {
   dispatch({ type: ActionType.FORGOT_PASSWORD_ON_CHANGE, payload: userData });
 };
 
-// console.log(process.env.REACT_APP_API_DOMAIN);
-
 export const forgotPasswordRequest = (navigate) => {
   return async (dispatch, getState) => {
     const state = getState();
@@ -25,17 +24,12 @@ export const forgotPasswordRequest = (navigate) => {
         if (res.data.statusCode === 200) {
           navigate("/login");
         }
-        dispatch(forgotPasswordSuccess(res.data.statusCode, res.data.message));
-        setTimeout(() => {
-          dispatch(forgotPasswordClear());
-        }, 5000);
+        dispatch(toastSuccess(res.data.statusCode, res.data.message));
+        dispatch(forgotPasswordClear());
       })
       .catch((error) => {
-        dispatch(forgotPasswordFailure(error));
-
-        setTimeout(() => {
-          dispatch(forgotPasswordClear());
-        }, 5000);
+        dispatch(toastFailure(error));
+        dispatch(forgotPasswordClear());
       });
   };
 };

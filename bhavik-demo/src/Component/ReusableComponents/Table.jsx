@@ -9,7 +9,13 @@ const Table = ({ tableheadings, tableData, Detail, DetailName, Edit, EditName, D
         keys = tableheadings
 
     } else {
-        keys = tableData && Array.isArray(tableData) ? Object.keys(tableData[0] || {}) : [];
+        let tempKeys = []
+        Object.entries(tableData[0]).map(([key]) => {
+            key === "_id" || key === "studentId" || key === "__v" ? console.log('object :>> ') : tempKeys.push(key)
+        })
+        keys = tempKeys
+        // console.log('keys :>> ', keys);
+        // keys = tableData && Array.isArray(tableData) ? Object.keys(tableData[0] || {}) : [];
 
     }
     return (

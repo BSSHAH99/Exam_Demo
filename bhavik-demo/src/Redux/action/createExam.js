@@ -1,5 +1,6 @@
 import validation from "../../Component/validation";
 import Api from "../../Services/apiInstance";
+import { toastSuccess, toastFailure } from "../action/toastAction";
 
 import { ActionType } from "./action-type";
 
@@ -14,17 +15,13 @@ export const createExamRequest = (initialData, navigate) => {
   return async (dispatch) => {
     await Api.post("dashboard/Teachers/Exam", initialData)
       .then((res) => {
-        dispatch(createExamSuccess(res.data.statusCode, res.data.message));
+        dispatch(toastSuccess(res.data.statusCode, res.data.message));
         navigate("/view-exam");
-        setTimeout(() => {
-          dispatch(createExamClear());
-        }, 5000);
+        dispatch(createExamClear());
       })
       .catch((error) => {
-        dispatch(createExamFailure(error.message));
-        setTimeout(() => {
-          dispatch(createExamClear());
-        }, 5000);
+        dispatch(toastFailure(error));
+        dispatch(createExamClear());
       });
   };
 };

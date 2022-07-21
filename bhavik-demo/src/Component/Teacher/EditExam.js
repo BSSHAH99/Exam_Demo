@@ -40,7 +40,7 @@ const EditExam = () => {
 
   useEffect(() => {
     dispatch(ExamDetailRequest(id));
-    isTeacher(naviget);
+    isTeacher();
 
     setTimeout(() => {
       if (data.questions) {

@@ -26,7 +26,7 @@ const StudentProfile = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    isStudent(navigate);
+    isStudent();
     dispatch(studentProfileRequest());
   }, []);
 

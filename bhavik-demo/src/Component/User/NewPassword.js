@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { Helmet } from "react-helmet";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import newPasswordFields from "../../Constants/NewPasswordFields";
@@ -14,6 +13,7 @@ import DemoButton from "../ReusableComponents/DemoButton";
 import DemoInput from "../ReusableComponents/DemoInput";
 import OneLink from "../ReusableComponents/OneLink";
 import validation from "../validation";
+import { toast } from "react-toastify";
 
 const NewPassword = () => {
   const dispatch = useDispatch();
@@ -28,7 +28,7 @@ const NewPassword = () => {
   const myState = useSelector((state) => state.newPasswordReducer);
   const userData = myState.user;
   const formerror = myState.formerror;
-  // console.log("userData :>> ", userData);
+  const message = myState.message;
 
   const handalSubmit = (e) => {
     e.preventDefault();
@@ -42,7 +42,8 @@ const NewPassword = () => {
       dispatch(isNewPassworError(error));
       return;
     }
-    dispatch(newPasswordTokenCheck(token));
+    console.log(" :>> ");
+    dispatch(newPasswordTokenCheck(token, navigate));
   };
 
   const handleChange = (e) => {
@@ -51,19 +52,8 @@ const NewPassword = () => {
 
   return (
     <>
-      <div>
-        <Helmet>
-          <title>New Password</title>
-          <meta name="from" content="New Password from" />
-          <meta name="keywords" content="New Password" />
-        </Helmet>
-      </div>
-
       <div className="container my-3">
         <div className="container">
-          {!myState.message ? null : (
-            <Alert className={"alert alert-danger"}>{myState.message}</Alert>
-          )}
           <form onSubmit={handalSubmit}>
             {newPasswordFields.map((input, index) => {
               return (
@@ -76,10 +66,6 @@ const NewPassword = () => {
                 />
               );
             })}
-
-            <div className="my-3 mx-3">
-              <OneLink to={"/login"}>Login</OneLink>
-            </div>
             <DemoButton type={"submit"}>Submit</DemoButton>
           </form>
         </div>

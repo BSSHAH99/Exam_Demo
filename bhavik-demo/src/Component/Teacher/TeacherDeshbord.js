@@ -6,11 +6,8 @@ import { fetchStudentRequest } from "../../Redux/action/getStudent";
 import { isTeacher } from "../function";
 import Table from "../ReusableComponents/Table";
 import Loading from "../ReusableComponents/Loading";
-import { useState } from "react";
 
 const TeacherDeshbord = () => {
-  const navigate = useNavigate();
-
   const myState = useSelector((state) => state.getStudentReducer);
   const student = myState.student;
 
@@ -19,7 +16,8 @@ const TeacherDeshbord = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    isTeacher(navigate);
+    console.log("called");
+    isTeacher();
     dispatch(fetchStudentRequest());
   }, []);
 
@@ -29,7 +27,7 @@ const TeacherDeshbord = () => {
       <div className="container my-3">
         <div className="container">
           {myState.loading ? (
-            <Loading></Loading>
+            <Loading />
           ) : (
             <Table tableheadings={tableheadings} tableData={tableData}></Table>
           )}

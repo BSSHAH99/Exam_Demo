@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { Helmet } from "react-helmet";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import forgotPasswordFields from "../../Constants/ForgotPasswordFields";
@@ -50,14 +49,6 @@ const ForgotPassword = () => {
 
   return (
     <>
-      <div>
-        <Helmet>
-          <title>Password</title>
-          <meta name="from" content="Password from" />
-          <meta name="keywords" content="Password" />
-        </Helmet>
-      </div>
-
       <div className="container my-3">
         <div className="container">
           {Object.keys(message).length === 0
@@ -77,9 +68,6 @@ const ForgotPassword = () => {
                 />
               );
             })}
-            <div className="my-3 mx-3">
-              <OneLink to={"/login"}>Login</OneLink>
-            </div>
             <DemoButton type={"submit"}>Submit</DemoButton>
           </form>
         </div>

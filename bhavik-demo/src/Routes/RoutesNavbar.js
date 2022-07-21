@@ -89,7 +89,7 @@ const RoutesNavbar = () => {
     },
     {
       path: "/edit-exam/",
-      goto: <CreateExam />,
+      goto: <CreateExam isEdit />,
       // goto: <EditExam />,
       requireAuth: true,
     },

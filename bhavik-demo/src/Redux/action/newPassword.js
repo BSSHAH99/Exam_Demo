@@ -1,12 +1,11 @@
-import axios from "axios";
 import validation from "../../Component/validation";
 import { ActionType } from "./action-type";
+import axios from "axios";
+import { toastSuccess, toastFailure } from "../action/toastAction";
 
 export const newPasswor = {};
 
 export const newPasswordOnChange = (key, value) => (dispatch, getState) => {
-  // console.log(key, value);
-
   const state = getState();
   const userData = state.newPasswordReducer.user;
   const { user } = state.newPasswordReducer;
@@ -18,39 +17,59 @@ export const newPasswordOnChange = (key, value) => (dispatch, getState) => {
   dispatch({ type: ActionType.NEW_PASSWORD_ON_CHANGE, payload: Data });
 };
 
-export const newPasswordTokenCheck = (token) => {
+export const newPasswordTokenCheck = (token, navigate) => {
+  console.log("newPasswordTokenCheck is caling :>> ");
   return async (dispatch) => {
+    // await Api.post("/users/newPassword")
     await axios
       .get(`${process.env.REACT_APP_API_DOMAIN}/users/newPassword`, {
         headers: { "access-token": token },
       })
       .then((res) => {
+        dispatch(toastSuccess(res.data.statusCode, res.data.message));
+        console.log("res.data :>> ", res.data);
         if (res.data.statusCode === 200) {
-          dispatch(newPasswordRequest(token));
+          dispatch(newPasswordRequest(token, navigate));
         } else {
-          dispatch(newPasswordFailure(res.data.message));
+          navigate("/ForgotPassword");
         }
+        dispatch(newPasswordClear());
       })
-      .catch((error) => dispatch(newPasswordFailure(error.message)));
+      .catch((error) => {
+        dispatch(toastFailure(error));
+        dispatch(newPasswordClear());
+      });
   };
 };
 
-export const newPasswordRequest = (token) => {
+export const newPasswordRequest = (token, navigate) => {
   console.log("newPasswordRequest caling :>> ");
   return async (dispatch, getState) => {
     const state = getState();
     const userData = state.newPasswordReducer.user;
+    // await Api.post(`/users/ForgotPassword/Verify?token=${token}`, userData)
     await axios
       .post(
         `${process.env.REACT_APP_API_DOMAIN}/users/ForgotPassword/Verify?token=${token}`,
         userData
       )
       .then((res) => {
-        // console.log(res.data);s
-        dispatch(newPasswordSuccess(res.data.message));
-        dispatch(newPasswordClear(res.data));
+        console.log("res.data :>> ", res.data);
+        if (res.data.statusCode === 200) {
+          navigate("/login");
+        }
+        dispatch(newPasswordSuccess(res.data.statusCode, res.data.message));
+
+        setTimeout(() => {
+          dispatch(newPasswordClear());
+        }, 5000);
       })
-      .catch((error) => dispatch(newPasswordFailure(error.message)));
+      .catch((error) => {
+        dispatch(newPasswordFailure(error.message));
+        setTimeout(() => {
+          dispatch(newPasswordClear());
+        }, 5000);
+      });
   };
 };
 
@@ -60,32 +79,22 @@ export const isNewPassworError = (validat) => {
     payload: validat,
   };
 };
-export const newPasswordSuccess = (message) => {
+export const newPasswordSuccess = (statusCode, message) => {
   return {
     type: ActionType.NEW_PASSWORD_SUCCESS,
-    payload: message,
+    payload: { statusCode: statusCode, message: message },
   };
 };
 export const newPasswordFailure = (error) => {
+  console.log("error :>> ", error);
   return {
     type: ActionType.NEW_PASSWORD_FAILURE,
     payload: error,
   };
 };
 
-export const newPasswordClear = (data) => {
+export const newPasswordClear = () => {
   return {
     type: ActionType.NEW_PASSWORD_CLEAR,
-    payload: data,
   };
 };
-
-// if (key === "Password") {
-//   const Password = { [key]: value };
-//   Object.assign(newPasswor, Password);
-// }
-
-// if (key === "ConfirmPassword") {
-//   const ConfirmPassword = { [key]: value };
-//   Object.assign(newPasswor, ConfirmPassword);
-// }

@@ -6,24 +6,32 @@ import RoutesNavbar from "./Routes/RoutesNavbar";
 import Navbar from "./Routes/Navbar";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { toastClear } from "./Redux/action/toastAction";
+import { useEffect } from "react";
 
 function App() {
+  const dispatch = useDispatch();
+  const myState = useSelector((state) => state.toastReducer);
+  const message = myState.message;
+
+  const handleTostify = (msg) => {
+    msg.statusCode === 200
+      ? toast.success(message.message)
+      : toast.error(message.message);
+  };
+
+  useEffect(() => {
+    dispatch(toastClear());
+  });
+
+  useEffect(() => {
+    myState?.message?.message && handleTostify(myState?.message);
+  }, [myState]);
+
   return (
     <div className="App">
-      {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header> */}
       <BrowserRouter>
         <Navbar />
         <RoutesNavbar />

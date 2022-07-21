@@ -13,15 +13,14 @@ const StudentDetail = () => {
   const search = useLocation().search;
   const id = new URLSearchParams(search).get("id");
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const myState = useSelector((state) => state.studentDetailReducer);
   const student = myState.studentDetail;
 
   let tableData = Object.values(student || {});
-  let tableheadings = ["name", "email"];
+  let tableheadings = ["name", "email", "Result"];
   useEffect(() => {
-    isTeacher(navigate);
+    isTeacher();
     dispatch(fetchStudentDetailRequest(id));
     return () => {
       dispatch(StudentDetailReset());

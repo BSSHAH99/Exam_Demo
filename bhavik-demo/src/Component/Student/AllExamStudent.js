@@ -22,7 +22,7 @@ const AllExamStudent = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    isStudent(navigate);
+    isStudent();
     dispatch(allExamStudentRequest());
   }, []);
 

@@ -34,7 +34,7 @@ const ExamPaper = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
-    isStudent(navigate);
+    isStudent();
     ExamPaperFields.map((data) =>
       setFormValues((prv) => ({ ...prv, [data.name]: "" }))
     );

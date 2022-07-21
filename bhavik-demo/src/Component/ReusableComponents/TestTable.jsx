@@ -8,7 +8,7 @@ const TestTable = ({ tableData, tableheadings, DetailName, Detail, Edit, EditNam
     const th = new Set();
     tableData.map((items) => {
         return Object.entries(items).map(([key]) => {
-            key === "_id" || key === "__v" ? console.log("") : th.add(key);
+            key === "_id" || key === "__v" ? console.log("key") : th.add(key);
         });
     });
     return (

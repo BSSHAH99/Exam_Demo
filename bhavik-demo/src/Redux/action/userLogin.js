@@ -1,6 +1,7 @@
 import validation from "../../Component/validation";
 import { ActionType } from "./action-type";
 import Api from "../../Services/apiInstance";
+import { toastSuccess, toastFailure } from "../action/toastAction";
 
 export const loginOnChange = (key, value) => (dispatch, getState) => {
   const state = getState();
@@ -18,9 +19,8 @@ export const loginRequest = (navigate) => {
     const state = getState();
     const userData = state.userLoginReducer.user;
     await Api.post("/users/Login", userData)
-
       .then((res) => {
-        dispatch(loginSuccess(res.data.statusCode, res.data.message));
+        dispatch(toastSuccess(res.data.statusCode, res.data.message));
         console.log("res.datas :>> ", res.data);
         if (res.data.statusCode === 200) {
           localStorage.setItem("access-token", res.data.data.token);
@@ -31,19 +31,13 @@ export const loginRequest = (navigate) => {
           } else if (res.data.data.role === "teacher") {
             navigate("/teacher-deshbord");
           }
-        } else {
-          loginSuccess(res.data.statusCode, res.data.message);
         }
-        setTimeout(() => {
-          dispatch(loginClear());
-        }, 5000);
+        dispatch(loginClear());
       })
       .catch((error) => {
         console.log("error :>> ", error);
-        dispatch(loginFailure(error));
-        setTimeout(() => {
-          dispatch(loginClear());
-        }, 5000);
+        dispatch(toastFailure(error));
+        dispatch(loginClear());
       });
   };
 };
@@ -73,7 +67,6 @@ export const isValidLoginFailure = (validat) => {
   };
 };
 export const loginSuccess = (statusCode, message) => {
-  console.log("data :>> ", message, statusCode);
   return {
     type: ActionType.LOGIN_SUCCESS,
     payload: { statusCode: statusCode, message: message },

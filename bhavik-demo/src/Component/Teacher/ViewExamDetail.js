@@ -23,7 +23,9 @@ const ViewExamDetail = () => {
 
   const viewExam = useSelector((state) => state.viewExamReducer.exam);
   const exasmDetailState = useSelector((state) => state.examDetailReducer);
-
+  const examDetail = useSelector((state) => state.examDetailReducer.examDetail);
+  const loading = useSelector((state) => state.examDetailReducer.loading);
+  console.log("exasmDetailState :>> ", exasmDetailState);
   const exasmDetail = exasmDetailState.examDetail;
   console.log("exasmDetail :>> ", exasmDetailState);
   console.log("viewExam :>> ", viewExam);
@@ -34,11 +36,14 @@ const ViewExamDetail = () => {
   const exam = myState.examDetail;
 
   useEffect(() => {
-    isTeacher(navigate);
-    setTimeout(() => {
-      editValue(index - 1);
-    }, 2000);
+    isTeacher();
   }, []);
+
+  useEffect(() => {
+    if (examDetail?.questions?.length) {
+      editValue(index - 1);
+    }
+  }, [examDetail]);
 
   useEffect(() => {
     if (Object.keys(cloneData || {})?.length) {
@@ -103,7 +108,7 @@ const ViewExamDetail = () => {
       <div>
         <div className="container my-3">
           <div className="container">
-            {!data.questions.length > 0 ? (
+            {loading ? (
               <Loading></Loading>
             ) : (
               <>

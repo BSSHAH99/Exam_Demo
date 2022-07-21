@@ -8,7 +8,7 @@ NewPasswordFields.forEach((element) => {
 
 const initialstate = {
   user: { ...user },
-  message: "",
+  message: {},
   formerror: {},
 };
 
@@ -21,13 +21,13 @@ const newPasswordReducer = (state = initialstate, action) => {
       return { ...state, formerror: { ...state.formerror, ...action.payload } };
 
     case ActionType.NEW_PASSWORD_SUCCESS:
-      return { ...state, message: action.payload };
+      return { ...state, message: { ...state.message, ...action.payload } };
 
     case ActionType.NEW_PASSWORD_FAILURE:
-      return { ...state, message: action.payload };
+      return { ...state, message: { ...state.message, ...action.payload } };
 
     case ActionType.NEW_PASSWORD_CLEAR:
-      return { ...state, user: { ...user } };
+      return initialstate;
 
     default:
       return state;

@@ -1,5 +1,3 @@
-import { Link, Navigate } from "react-router-dom";
-import { Helmet } from "react-helmet";
 import LoginFields from "../../Constants/LoginFields";
 import DemoButton from "../ReusableComponents/DemoButton";
 import DemoInput from "../ReusableComponents/DemoInput";
@@ -51,21 +49,8 @@ const Login = () => {
   console.log("composnest render :>> ");
   return (
     <>
-      <div>
-        <Helmet>
-          <title>Login</title>
-          <meta name="from" content="Login from" />
-          <meta name="keywords" content="Login" />
-        </Helmet>
-      </div>
-
       <div className="container my-3">
         <div className="container">
-          {Object.keys(message).length === 0
-            ? null
-            : message.statusCode === 200
-            ? toast.success(message.message)
-            : toast.error(message.message)}
           <form onSubmit={handalSubmit}>
             {LoginFields.map((input, index) => {
               return (

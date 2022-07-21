@@ -28,7 +28,7 @@ const ViewExam = () => {
   // console.log("exam :>> ", exam);
 
   useEffect(() => {
-    isTeacher(navigate);
+    isTeacher();
     dispatch(ViewExamRequest());
   }, []);
 
@@ -38,7 +38,7 @@ const ViewExam = () => {
   };
 
   const onEdit = (e, index, id, data) => {
-    dispatch(ExamDetailRequest(id));
+    // dispatch(ExamDetailRequest(id));
     // console.log("e, index, data._id :>> ", id);
     navigate("/edit-exam?id=" + id, { state: data });
   };
