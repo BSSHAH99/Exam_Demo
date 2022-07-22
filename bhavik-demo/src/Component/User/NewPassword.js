@@ -7,7 +7,7 @@ import {
   newPasswordOnChange,
   newPasswordTokenCheck,
 } from "../../Redux/action/newPassword";
-import { isLogin } from "../function";
+import { isLogin } from "../../Utils/function";
 import Alert from "../ReusableComponents/Alert";
 import DemoButton from "../ReusableComponents/DemoButton";
 import DemoInput from "../ReusableComponents/DemoInput";

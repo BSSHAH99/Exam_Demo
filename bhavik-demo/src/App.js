@@ -1,7 +1,4 @@
-import logo from "./logo.svg";
-// import "./App.css";
 import { BrowserRouter } from "react-router-dom";
-
 import RoutesNavbar from "./Routes/RoutesNavbar";
 import Navbar from "./Routes/Navbar";
 import { ToastContainer } from "react-toastify";
@@ -29,7 +26,6 @@ function App() {
   useEffect(() => {
     myState?.message?.message && handleTostify(myState?.message);
   }, [myState]);
-
   return (
     <div className="App">
       <BrowserRouter>

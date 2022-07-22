@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { allExamStudentRequest } from "../../Redux/action/allExamStudent";
 import { fetchExamPaperRequest } from "../../Redux/action/examPaper";
-import { isStudent } from "../function";
+import { isStudent } from "../../Utils/function";
 import Loading from "../ReusableComponents/Loading";
 import Table from "../ReusableComponents/Table";
 import { Button, Modal } from "react-bootstrap";

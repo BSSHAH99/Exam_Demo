@@ -24,99 +24,98 @@ const RoutesNavbar = () => {
   const n = [
     {
       path: "/signup",
-      goto: <SignUp />,
+      component: <SignUp />,
       requireAuth: false,
     },
     {
       path: "/login",
-      goto: <Login />,
+      component: <Login />,
       requireAuth: false,
     },
     {
       path: "/ForgotPassword",
-      goto: <ForgotPassword />,
+      component: <ForgotPassword />,
       requireAuth: false,
     },
     {
       path: "/newPassword",
-      goto: <NewPassword />,
+      component: <NewPassword />,
       requireAuth: false,
     },
     {
       path: "/resetPassword",
-      goto: <ResetPassword />,
+      component: <ResetPassword />,
       requireAuth: true,
     },
     {
       path: "/",
-      goto: <Home />,
+      component: <Home />,
       requireAuth: true,
     },
     {
       path: "/teacher-deshbord",
-      goto: <TeacherDeshbord />,
+      component: <TeacherDeshbord />,
       requireAuth: true,
     },
     {
       path: "/verified-student",
-      goto: <StudentForExam />,
+      component: <StudentForExam />,
       requireAuth: true,
     },
     {
       path: "/student-detail/",
-      goto: <StudentDetail />,
+      component: <StudentDetail />,
       requireAuth: true,
     },
     {
       path: "/student-deshbord",
-      goto: <AllExamStudent />,
+      component: <AllExamStudent />,
       requireAuth: true,
     },
     {
       path: "/create-exam",
-      goto: <CreateExam />,
+      component: <CreateExam />,
       requireAuth: true,
     },
     {
       path: "/view-exam",
-      goto: <ViewExam />,
+      component: <ViewExam />,
       requireAuth: true,
     },
     {
       path: "/exam-detail/",
-      goto: <ViewExamDetail />,
+      component: <ViewExamDetail />,
       requireAuth: true,
     },
     {
       path: "/edit-exam/",
-      goto: <CreateExam isEdit />,
-      // goto: <EditExam />,
+      component: <CreateExam isEdit />,
+      // component: <EditExam />,
       requireAuth: true,
     },
     {
       path: "/student-deshbord",
-      goto: <AllExamStudent />,
+      component: <AllExamStudent />,
       requireAuth: true,
     },
     {
       path: "/exam-paper/",
-      goto: <ExamPaper />,
+      component: <ExamPaper />,
       requireAuth: true,
     },
     {
       path: "/student-profile",
-      goto: <StudentProfile />,
+      component: <StudentProfile />,
       requireAuth: true,
     },
     {
       path: "/student-profile-edit",
-      goto: <EditStudentProfile />,
+      component: <EditStudentProfile />,
       requireAuth: true,
     },
-
     {
       path: "*",
-      goto: <NoMatch />,
+      component: <NoMatch />,
       // requireAuth : true
     },
   ];

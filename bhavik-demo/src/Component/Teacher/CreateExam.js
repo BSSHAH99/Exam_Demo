@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { isTeacher, reset, resetAll } from "../function";
+import { isTeacher, reset, resetAll } from "../../Utils/function";
 import createExamFields from "../../Constants/CreateExamFields";
 import DemoButton from "../ReusableComponents/DemoButton";
 import Loading from "../ReusableComponents/Loading";

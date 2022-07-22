@@ -7,7 +7,7 @@ import {
   ViewExamRequest,
 } from "../../Redux/action/viewExam";
 import { ExamDetailRequest } from "../../Redux/action/viewExamDetail";
-import { isTeacher } from "../function";
+import { isTeacher } from "../../Utils/function";
 import DemoButton from "../ReusableComponents/DemoButton";
 import Table from "../ReusableComponents/Table";
 import Loading from "../ReusableComponents/Loading";

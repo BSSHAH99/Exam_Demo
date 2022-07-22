@@ -10,10 +10,10 @@ import { useDispatch, useSelector } from "react-redux";
 import Alert from "../ReusableComponents/Alert";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { isLogin } from "../function";
+import { isLogin } from "../../Utils/function";
 import OneLink from "../ReusableComponents/OneLink";
 import validation from "../validation";
-import { toast } from "react-toastify";
+import { singInWithGoogle } from "../../ Firebase";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -23,7 +23,6 @@ const Login = () => {
   const userData = myState.user;
   const formerror = myState.formerror;
   const message = myState.message;
-  console.log("message.statescode :>> ", message.statusCode);
 
   useEffect(() => {
     isLogin(navigate);
@@ -46,7 +45,7 @@ const Login = () => {
   const handleChange = (e) => {
     dispatch(loginOnChange(e.target.name, e.target.value));
   };
-  console.log("composnest render :>> ");
+
   return (
     <>
       <div className="container my-3">
@@ -64,6 +63,13 @@ const Login = () => {
               );
             })}
             <DemoButton type={"submit"}>Login</DemoButton>
+            {/* <DemoButton
+              type={"submit"}
+              onClick={singInWithGoogle}
+              className={"login-with-google-btn"}
+            >
+              Sing In With Google
+            </DemoButton> */}
           </form>
         </div>
         <div className="my-3 mx-3">

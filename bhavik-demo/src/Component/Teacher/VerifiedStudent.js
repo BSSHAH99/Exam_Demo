@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { fetchVerifiedStudentRequest } from "../../Redux/action/getVerifiedStudent";
-import { isTeacher } from "../function";
+import { isTeacher } from "../../Utils/function";
 import Table from "../ReusableComponents/Table";
 import Loading from "../ReusableComponents/Loading";
 

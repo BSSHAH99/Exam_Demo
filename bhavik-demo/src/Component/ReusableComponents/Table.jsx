@@ -41,6 +41,7 @@ const Table = ({ tableheadings, tableData, Detail, DetailName, Edit, EditName, D
                                     // console.log('data :>> ', data);
                                     return (
                                         <tr key={index}>
+                                            <td>{index + 1}</td>
                                             {keys.map((key, i) => {
                                                 // console.log('keys :>> ', keys);
                                                 return (

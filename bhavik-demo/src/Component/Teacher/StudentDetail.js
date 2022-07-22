@@ -5,7 +5,7 @@ import {
   fetchStudentDetailRequest,
   StudentDetailReset,
 } from "../../Redux/action/studentDetail";
-import { isTeacher } from "../function";
+import { isTeacher } from "../../Utils/function";
 import Table from "../ReusableComponents/Table";
 import Loading from "../ReusableComponents/Loading";
 

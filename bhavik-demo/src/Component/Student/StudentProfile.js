@@ -8,7 +8,7 @@ import {
 } from "../../Redux/action/editStudentProfile";
 import { studentProfileRequest } from "../../Redux/action/studentProfile";
 import EditStudentProfile from "./EditStudentProfile";
-import { isStudent } from "../function";
+import { isStudent } from "../../Utils/function";
 import DemoButton from "../ReusableComponents/DemoButton";
 import DemoTable from "../ReusableComponents/DemoTable";
 import Loading from "../ReusableComponents/Loading";

@@ -6,7 +6,7 @@ import {
   fetchExamPaperRequest,
   giveExamRequest,
 } from "../../Redux/action/examPaper";
-import { isStudent, reset } from "../function";
+import { isStudent, reset } from "../../Utils/function";
 import DemoButton from "../ReusableComponents/DemoButton";
 import Loading from "../ReusableComponents/Loading";
 import ExamPaperFields from "../../Constants/ExamPaperFields";

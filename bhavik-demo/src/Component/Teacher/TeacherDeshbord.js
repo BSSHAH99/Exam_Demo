@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { fetchStudentRequest } from "../../Redux/action/getStudent";
-import { isTeacher } from "../function";
+import { isTeacher } from "../../Utils/function";
 import Table from "../ReusableComponents/Table";
 import Loading from "../ReusableComponents/Loading";
 
@@ -12,7 +12,7 @@ const TeacherDeshbord = () => {
   const student = myState.student;
 
   let tableData = Object.values(student || {});
-  let tableheadings = ["name", "email", "status"];
+  let tableheadings = ["No", "name", "email", "status"];
   const dispatch = useDispatch();
 
   useEffect(() => {

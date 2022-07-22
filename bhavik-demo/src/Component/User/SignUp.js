@@ -12,7 +12,7 @@ import {
 } from "../../Redux/action/userSignup";
 import Alert from "../ReusableComponents/Alert";
 import OneLink from "../ReusableComponents/OneLink";
-import { isLogin } from "../function";
+import { isLogin } from "../../Utils/function";
 import { useNavigate } from "react-router-dom";
 import validation from "../validation";
 import { toast } from "react-toastify";
